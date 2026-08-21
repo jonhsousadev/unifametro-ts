@@ -1,0 +1,29 @@
+{
+  "curso": {
+    "nome": "Teste de Software",
+    "faculdade": "UNIFAMETRO",
+    "professor": "Prof. Jonh Sousa",
+    "tagline": "Garantindo a qualidade do código",
+    "cor": "#00d4ff"
+  },
+  "aulas": [
+    {
+      "id": "00",
+      "pasta": "aula0",
+      "nome": "Abertura",
+      "descricao": "Apresentação da disciplina, metodologia e visão geral de testes de software",
+      "pratica": {
+        "id": "P1",
+        "arquivo": "pratica/index.html",
+        "nome": "Cadastro de Usuários",
+        "descricao": "CRUD com validações intencionalmente falhas para demonstração de testes"
+      }
+    },
+    {
+      "id": "01",
+      "pasta": "aula1",
+      "nome": "UNIDADE 1",
+      "descricao": "Prática de design de interfaces centrado no usuário"
+    }
+  ]
+}

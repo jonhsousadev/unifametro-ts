@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório de Falhas - Prática 1 - UNIFAMETRO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #020617;
+      color: #94a3b8;
+      font-family: 'Urbanist', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px;
+      flex: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header .tag {
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #00d4ff;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+      font-size: 36px;
+    }
+
+    .header h1 span {
+      color: #f97316;
+    }
+
+    .header .divider-line {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #00d4ff, #f97316);
+      margin: 24px auto;
+      border-radius: 2px;
+    }
+
+    .header p {
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 24px;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: #00d4ff; }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .summary-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .summary-card .number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .summary-card .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #475569;
+    }
+
+    .summary-card.validation .number { color: #ef4444; }
+    .summary-card.responsive .number { color: #f97316; }
+    .summary-card.accessibility .number { color: #a855f7; }
+    .summary-card.ux .number { color: #00d4ff; }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-header .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .section-header .icon.red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .section-header .icon.orange { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+    .section-header .icon.purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+    .section-header .icon.cyan { background: rgba(0, 212, 255, 0.15); color: #00d4ff; }
+
+    .section-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .section-header .count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #475569;
+      margin-left: auto;
+    }
+
+    .table-wrapper {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #64748b;
+      padding: 16px 20px;
+      text-align: left;
+      border-bottom: 1px solid #1e293b;
+      background: #0a0f1e;
+    }
+
+    tbody td {
+      padding: 14px 20px;
+      border-bottom: 1px solid #1e293b;
+      font-size: 14px;
+      color: #cbd5e1;
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover {
+      background: rgba(0, 212, 255, 0.03);
+    }
+
+    tbody td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: #475569;
+      font-size: 13px;
+      width: 40px;
+    }
+
+    .severity {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .severity.critical { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .severity.high { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+    .severity.medium { background: rgba(234, 179, 8, 0.15); color: #eab308; }
+    .severity.low { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+
+    .severity i { font-size: 8px; }
+
+    .bug-desc {
+      line-height: 1.6;
+    }
+
+    .bug-desc code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: rgba(0, 212, 255, 0.08);
+      color: #00d4ff;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    .how-to-test {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 6px;
+      padding-left: 12px;
+      border-left: 2px solid #1e293b;
+    }
+
+    .how-to-test strong {
+      color: #94a3b8;
+    }
+
+    .footer {
+      border-top: 1px solid #1e293b;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer .divider-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #00d4ff, #f97316);
+      margin: 0 auto 16px;
+      border-radius: 2px;
+    }
+
+    .footer .copy {
+      color: #334155;
+      font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+      .summary-cards { grid-template-columns: repeat(2, 1fr); }
+      .header h1 { font-size: 26px; }
+      thead th, tbody td { padding: 10px 12px; }
+      .table-wrapper { overflow-x: auto; }
+    }
+
+    @media (max-width: 480px) {
+      .summary-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Voltar para o CRUD
+    </a>
+
+    <div class="header">
+      <div class="tag">UNIFAMETRO | PROF. JONH SOUSA</div>
+      <h1>Relatório de <span>Falhas</span></h1>
+      <div class="divider-line"></div>
+      <p>Teste caixa-preta — validação, responsividade, acessibilidade e UX</p>
+    </div>
+
+    <div class="summary-cards">
+      <div class="summary-card validation">
+        <div class="number">8</div>
+        <div class="label">Validação</div>
+      </div>
+      <div class="summary-card responsive">
+        <div class="number">6</div>
+        <div class="label">Responsividade</div>
+      </div>
+      <div class="summary-card accessibility">
+        <div class="number">3</div>
+        <div class="label">Acessibilidade</div>
+      </div>
+      <div class="summary-card ux">
+        <div class="number">3</div>
+        <div class="label">UX</div>
+      </div>
+    </div>
+
+    <!-- VALIDAÇÃO -->
+    <div class="section">
+      <div class="section-header">
+        <div class="icon red"><i class="fas fa-bug"></i></div>
+        <h2>Bugs de Validação</h2>
+        <div class="count">8 falhas</div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Descrição</th>
+              <th>Como reproduzir</th>
+              <th>Severidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td>
+                <div class="bug-desc"><strong>CPF aceita letras</strong> — o campo aceita caracteres alfabéticos sem exibir erro.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Preencher o CPF com <code>ABC.DEF.GHI-JK</code> e submeter.<br><strong>Esperado:</strong> erro de validação.<br><strong>Atual:</strong> salva sem problema.</div>
+              </td>
+              <td><span class="severity critical"><i class="fas fa-circle"></i> Crítica</span></td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td>
+                <div class="bug-desc"><strong>CPF não valida dígitos verificadores</strong> — aceita qualquer formato com pontos e traço, sem verificar se os dígitos são válidos.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Preencher o CPF com <code>123.456.789-00</code> (dígito verificador inválido) e submeter.<br><strong>Esperado:</strong> erro de validação.<br><strong>Atual:</strong> salva sem problema.</div>
+              </td>
+              <td><span class="severity critical"><i class="fas fa-circle"></i> Crítica</span></td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td>
+                <div class="bug-desc"><strong>CPF duplicado permitido</strong> — cadastra dois usuários com o mesmo CPF sem bloqueio.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Cadastrar um usuário com CPF <code>111.111.111-11</code>, depois cadastrar outro com o mesmo CPF.<br><strong>Esperado:</strong> erro de duplicidade.<br><strong>Atual:</strong> salva os dois.</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td>
+                <div class="bug-desc"><strong>Data de nascimento não valida dia nem mês</strong> — aceita <code>32/13/9999</code> ou <code>00/00/0000</code>.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Preencher data com <code>32/13/9999</code> e submeter.<br><strong>Esperado:</strong> erro de validação.<br><strong>Atual:</strong> salva sem problema.</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td>
+                <div class="bug-desc"><strong>E-mail não valida formato</strong> — aceita qualquer string, incluindo <code>abc</code>, <code>@x@x</code> ou <code>teste</code>.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Preencher o e-mail com <code>abc</code> e submeter.<br><strong>Esperado:</strong> erro de formato.<br><strong>Atual:</strong> salva sem problema.</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>06</td>
+              <td>
+                <div class="bug-desc"><strong>Telefone aceita letras</strong> — o campo não rejeita caracteres alfabéticos.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Colar <code>(AB) CDEFG-HIJK</code> no telefone e submeter.<br><strong>Esperado:</strong> erro de validação.<br><strong>Atual:</strong> salva sem problema.</div>
+              </td>
+              <td><span class="severity medium"><i class="fas fa-circle"></i> Média</span></td>
+            </tr>
+            <tr>
+              <td>07</td>
+              <td>
+                <div class="bug-desc"><strong>Senha e confirmação não conferem coincidência</strong> — aceita senhas diferentes nos dois campos sem alerta.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Preencher senha com <code>123456</code> e confirmar senha com <code>654321</code>, depois submeter.<br><strong>Esperado:</strong> erro de senhas diferentes.<br><strong>Atual:</strong> salva sem problema.</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>08</td>
+              <td>
+                <div class="bug-desc"><strong>Campos "required" não são obrigatórios de verdade</strong> — só valida se o campo está vazio, sem checar formato ou conteúdo.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Preencher o e-mail com <code>   </code> (espaços) e submeter.<br><strong>Esperado:</strong> erro de campo obrigatório.<br><strong>Atual:</strong> salva sem problema.</div>
+              </td>
+              <td><span class="severity medium"><i class="fas fa-circle"></i> Média</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RESPONSIVIDADE -->
+    <div class="section">
+      <div class="section-header">
+        <div class="icon orange"><i class="fas fa-mobile-alt"></i></div>
+        <h2>Falhas de Responsividade</h2>
+        <div class="count">6 falhas</div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Descrição</th>
+              <th>Como reproduzir</th>
+              <th>Severidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>09</td>
+              <td>
+                <div class="bug-desc"><strong>Breakpoint inadequado</strong> — a adaptação só acontece abaixo de 600px. Telas entre 600px e 900px ficam truncadas.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Redimensionar o navegador para 750px de largura.<br><strong>Esperado:</strong> layout adaptado.<br><strong>Atual:</strong> tabela cortada sem tratamento.</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>
+                <div class="bug-desc"><strong>Tabela sem scroll horizontal</strong> — em telas menores, as colunas somem da tela sem possibilidade de rolar.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Abrir em tela de 500px e tentar rolar a tabela horizontalmente.<br><strong>Esperado:</strong> scrollbar horizontal disponível.<br><strong>Atual:</strong> conteúdo invisível, sem scroll.</div>
+              </td>
+              <td><span class="severity critical"><i class="fas fa-circle"></i> Crítica</span></td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>
+                <div class="bug-desc"><strong>Colunas da tabela não se adaptam</strong> — 6 colunas ficam ilegíveis em mobile sem ocultação nem mudança de layout.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Abrir em tela de 400px.<br><strong>Esperado:</strong> colunas menos importantes ocultas ou layout de cards.<br><strong>Atual:</strong> todas as 6 colunas empilhadas e ilegíveis.</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>
+                <div class="bug-desc"><strong>Botões de ação apertados em mobile</strong> — Editar e Excluir ficam com toque difícil em dispositivos móveis.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Tentar tocar nos botões de ação em um celular.<br><strong>Esperado:</strong> alvos de toque de pelo menos 44px.<br><strong>Atual:</strong> botões de 34px, difíceis de acertar.</div>
+              </td>
+              <td><span class="severity medium"><i class="fas fa-circle"></i> Média</span></td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>
+                <div class="bug-desc"><strong>Header só reduz fonte sem quebrar</strong> — o título muda de 36px para 26px mas não reorganiza o layout.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Reduzir a tela para 400px.<br><strong>Esperado:</strong> header reorganizado.<br><strong>Atual:</strong> mesmo layout compacto, só com fonte menor.</div>
+              </td>
+              <td><span class="severity low"><i class="fas fa-circle"></i> Baixa</span></td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>
+                <div class="bug-desc"><strong>Container com padding fixo</strong> — em telas muito pequenas, o padding consome espaço demais.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Abrir em tela de 320px.<br><strong>Esperado:</strong> padding reduzido.<br><strong>Atual:</strong> padding de 24px fixo, conteúdo apertado.</div>
+              </td>
+              <td><span class="severity low"><i class="fas fa-circle"></i> Baixa</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ACESSIBILIDADE -->
+    <div class="section">
+      <div class="section-header">
+        <div class="icon purple"><i class="fas fa-universal-access"></i></div>
+        <h2>Falhas de Acessibilidade</h2>
+        <div class="count">3 falhas</div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Descrição</th>
+              <th>Como reproduzir</th>
+              <th>Severidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15</td>
+              <td>
+                <div class="bug-desc"><strong>Botões de ícone sem aria-label</strong> — Editar, Excluir e Fechar usam apenas ícones sem texto acessível.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Navegar com leitor de tela (NVDA/VoiceOver) e focar nos botões de ação.<br><strong>Esperado:</strong> leitor anuncia "Editar usuário", "Excluir usuário".<br><strong>Atual:</strong> leitor anuncia apenas "botão".</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td>
+                <div class="bug-desc"><strong>Modal sem foco trapping</strong> — o foco não é contido dentro do modal aberto.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Abrir o modal e pressionar Tab repetidamente.<br><strong>Esperado:</strong> foco permanece dentro do modal.<br><strong>Atual:</strong> foco sai para elementos atrás do overlay.</div>
+              </td>
+              <td><span class="severity high"><i class="fas fa-circle"></i> Alta</span></td>
+            </tr>
+            <tr>
+              <td>17</td>
+              <td>
+                <div class="bug-desc"><strong>Cores com contraste insuficiente</strong> — textos em cinza escuro sobre fundo escuro não atingem o mínimo WCAG AA (4.5:1).</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Usar ferramenta de contraste (ex: WebAIM Contrast Checker) no texto "Registros: 0" e no rodapé.<br><strong>Esperado:</strong> ratio mínimo de 4.5:1.<br><strong>Atual:</strong> ratio abaixo de 4.5:1.</div>
+              </td>
+              <td><span class="severity medium"><i class="fas fa-circle"></i> Média</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- UX -->
+    <div class="section">
+      <div class="section-header">
+        <div class="icon cyan"><i class="fas fa-user-times"></i></div>
+        <h2>Falhas de UX / Comportamento</h2>
+        <div class="count">3 falhas</div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Descrição</th>
+              <th>Como reproduzir</th>
+              <th>Severidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>18</td>
+              <td>
+                <div class="bug-desc"><strong>Sem confirmação ao fechar modal com dados</strong> — preencher o formulário e cancelar perde tudo sem aviso.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Abrir modal, preencher campos, clicar "Cancelar" ou fora do modal.<br><strong>Esperado:</strong> confirmação antes de perder dados.<br><strong>Atual:</strong> fecha sem aviso, dados perdidos.</div>
+              </td>
+              <td><span class="severity medium"><i class="fas fa-circle"></i> Média</span></td>
+            </tr>
+            <tr>
+              <td>19</td>
+              <td>
+                <div class="bug-desc"><strong>Toast sem role="alert"</strong> — notificações não são anunciadas por leitores de tela.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Cadastrar um usuário com leitor de tela ativo.<br><strong>Esperado:</strong> leitor anuncia "Usuário cadastrado com sucesso".<br><strong>Atual:</strong> toast aparece visualmente mas leitor não anuncia.</div>
+              </td>
+              <td><span class="severity medium"><i class="fas fa-circle"></i> Média</span></td>
+            </tr>
+            <tr>
+              <td>20</td>
+              <td>
+                <div class="bug-desc"><strong>Sem estado de loading no botão Salvar</strong> — o botão não indica processamento, permitindo cliques múltiplos.</div>
+              </td>
+              <td>
+                <div class="how-to-test"><strong>Passo:</strong> Clicar rapidamente no botão "Salvar" várias vezes.<br><strong>Esperado:</strong> botão desabilitado ou com spinner durante processamento.<br><strong>Atual:</strong> botão permanece clicável, pode gerar duplicatas.</div>
+              </td>
+              <td><span class="severity low"><i class="fas fa-circle"></i> Baixa</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="divider-line"></div>
+    <div class="copy">&copy; 2026 Prof. Jonh Sousa - UNIFAMETRO</div>
+  </footer>
+</body>
+</html>

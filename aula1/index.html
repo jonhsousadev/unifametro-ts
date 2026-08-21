@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="css/mattropolis.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+    <style>
+      @media print {
+        html.print-pdf body {
+          background: #020617 !important;
+        }
+        html.print-pdf .reveal .slide-background {
+          background: #020617 !important;
+        }
+        html.print-pdf .reveal .slides section {
+          background-color: #020617 !important;
+          color: #fff !important;
+        }
+        html.print-pdf .reveal .slides section h1,
+        html.print-pdf .reveal .slides section h2,
+        html.print-pdf .reveal .slides section h3,
+        html.print-pdf .reveal .slides section h4,
+        html.print-pdf .reveal .slides section h5,
+        html.print-pdf .reveal .slides section p,
+        html.print-pdf .reveal .slides section li,
+        html.print-pdf .reveal .slides section span {
+          color: #fff !important;
+        }
+        html.print-pdf .reveal .slides section a {
+          color: #e7ad52 !important;
+        }
+        html.print-pdf * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    </style>
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.reveal .slides section {
+  padding: 0 !important;
+  background-color: #020617 !important;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.reveal .slides section.present {
+  opacity: 1 !important;
+}
+
+.reveal .slides section:not(.present) {
+  opacity: 0 !important;
+}
+
+.slide-content {
+  width: 100%;
+  height: 100%;
+  padding: 40px 60px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  position: relative;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #00d4ff #0f172a;
+}
+
+.reveal h1 {
+  font-family: 'Urbanist', sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  line-height: 1.1 !important;
+  font-size: 74px !important;
+}
+
+.reveal h2 {
+  font-family: 'Urbanist', sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  border-left: 10px solid #00d4ff;
+  padding-left: 30px !important;
+  margin-bottom: 20px !important;
+  font-size: 56px !important;
+}
+
+.reveal h3 {
+  font-family: 'Urbanist', sans-serif !important;
+  font-weight: 700 !important;
+  color: #f97316 !important;
+  font-size: 37px !important;
+  margin-bottom: 16px !important;
+}
+
+.reveal p, .reveal li {
+  font-family: 'Urbanist', sans-serif !important;
+  color: #94a3b8 !important;
+  font-size: 29px !important;
+  line-height: 1.5 !important;
+}
+
+.reveal ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.reveal ul li::before {
+  content: '▸ ' !important;
+  color: #00d4ff !important;
+  font-weight: bold !important;
+}
+
+.green { color: #22c55e !important; }
+.orange { color: #f97316 !important; }
+.blue { color: #00d4ff !important; }
+.cyan { color: #06b6d4 !important; }
+.mono { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; letter-spacing: 3px; }
+.divider { width: 100%; height: 1px; background: #1e293b; margin: 20px 0; }
+
+.slide-content::after {
+  content: '';
+  position: absolute;
+  bottom: 30px;
+  left: 60px;
+  width: 100px;
+  height: 6px;
+  background: linear-gradient(90deg, #00d4ff, #f97316);
+}
+
+.reveal .fragment {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal .fragment.visible {
+  opacity: 1;
+}
+
+.reveal .fragment.fade-up {
+  transform: translateY(15px);
+}
+
+.reveal .fragment.visible.fade-up {
+  transform: translateY(0);
+}
+
+.quiz-option {
+  background: #0f172a !important;
+  border: 2px solid #1e293b !important;
+  border-radius: 8px !important;
+  padding: 10px 16px !important;
+  margin-bottom: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.quiz-option p {
+  font-size: 21px !important;
+  margin: 0 !important;
+}
+
+.quiz-option.correct {
+  border-color: #22c55e !important;
+  background: rgba(34, 197, 94, 0.15) !important;
+}
+
+.quiz-option.incorrect {
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+.unit-card {
+  background: #0f172a !important;
+  border: 2px solid #1e293b !important;
+  border-left: 4px solid #00d4ff !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.unit-card:hover {
+  border-color: #00d4ff !important;
+  transform: translateX(5px);
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00d4ff;
+  display: inline-block;
+  margin-right: 12px;
+}
+</style>
+
+<!-- SLIDE 32: INÍCIO DA AULA 1 - UNIDADE I -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <div class="mono blue" style="font-size: 18px; margin-bottom: 20px;">AULA 01: CONTEÚDO</div>
+  <h1 style="font-size: 58px !important;">UNIDADE <span class="blue">I</span></h1>
+  <h2 style="font-size: 43px !important; border-left: none !important; padding-left: 0 !important;">Introdução e <span>Teste Funcional</span></h2>
+  <div style="height: 2px; width: 100px; background: linear-gradient(90deg, #00d4ff, #f97316); margin: 40px 0;"></div>
+  <div class="mono" style="font-size: 14px; color: #475569;">APÓS A VISÃO GERAL, VAMOS APROFUNDAR</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 22: O QUE É VERIFICAÇÃO -->
+<div class="slide-content">
+  <h2>O que é <span>Verificação</span>?</h2>
+  <p style="margin-bottom: 20px;">Garantindo que estamos no caminho certo.</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Definição:</strong> Avaliação de um produto de trabalho para determinar se ele atende aos requisitos especificados</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Foco:</strong> Processo de desenvolvimento</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Métodos:</strong> Revisão, inspeção, auditoria</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Pergunta-chave:</strong> "Estamos construindo o produto da forma correta?"</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 23: O QUE É VALIDAÇÃO -->
+<div class="slide-content">
+  <h2>O que é <span>Validação</span>?</h2>
+  <p style="margin-bottom: 20px;">Garantindo que o produto atende ao usuário.</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Definição:</strong> Confirmação de que o produto satisfaz às necessidades do usuário</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Foco:</strong> Produto final</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Métodos:</strong> Teste de sistema, teste de aceitação</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Pergunta-chave:</strong> "Estamos construindo o produto certo?"</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 24: FUNDAMENTOS DE TESTES -->
+<div class="slide-content">
+  <h2>Fundamentos de <span>Testes</span></h2>
+  <p style="margin-bottom: 20px;">Princípios essenciais.</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Exaustivo:</strong> Impossível testar tudo — priorize</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Falhas residuais:</strong> Sempre haverá defeitos escondidos</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Paradoxo do teste:</strong> Encontrar defeitos não prova ausência de defeitos</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Caso mais provável:</strong> O defeito está onde menos se espera</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Propaganda:</strong> O vendedor de pesticidas não usa seu próprio produto</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 25: O QUE É TESTE FUNCIONAL -->
+<div class="slide-content">
+  <h2>O que é <span>Teste Funcional</span>?</h2>
+  <p style="margin-bottom: 20px;">Validando o que o software faz.</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Definição:</strong> Testa se o sistema funciona conforme os requisitos</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Caixa-preta:</strong> Não importa como foi feito, importa o resultado</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Entrada vs Saída:</strong> Valida comportamento esperado</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Requisitos:</strong> Base para gerar casos de teste</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 26: TIPOS DE TESTE FUNCIONAL -->
+<div class="slide-content">
+  <h2>Tipos de <span>Teste Funcional</span></h2>
+  <p style="margin-bottom: 20px;">Diferentes perspectivas.</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Teste de unidade:</strong> Componentes isolados</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Teste de integração:</strong> Comunicação entre módulos</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Teste de sistema:</strong> Software completo funcionando</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Teste de regressão:</strong> Garantir que nada quebrou</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Teste de aceitação:</strong> Validação com o cliente</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE: ESTRUTURA DO CASO DE TESTE -->
+<div class="slide-content">
+  <h2>Estrutura de um <span>Caso de Teste</span></h2>
+  <p style="margin-bottom: 20px;">Campos essenciais para documentar testes.</p>
+  <div class="divider"></div>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #00d4ff;">ID:</strong> Identificador único (ex: CT-LOGIN-001)</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Cenário:</strong> O que está sendo testado</li>
+    <li class="fragment fade-up"><strong style="color: #f97316;">Pré-condição:</strong> Estado antes da execução</li>
+    <li class="fragment fade-up"><strong style="color: #00d4ff;">Entrada:</strong> Dados de teste utilizados</li>
+    <li class="fragment fade-up"><strong style="color: #22c55e;">Resultado esperado:</strong> Comportamento aguardado</li>
+    <li class="fragment fade-up"><strong style="color: #94a3b8;">Resultado obtido:</strong> Preenchido após execução</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE: EXEMPLO CASO DE TESTE 1A -->
+<div class="slide-content">
+  <h2>Caso de Teste — <span>Login</span></h2>
+  <p style="margin-bottom: 16px;">Exemplo prático de teste funcional.</p>
+  <div class="divider"></div>
+  <div class="unit-card">
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #00d4ff;">ID:</strong> CT-LOGIN-001</p>
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #fff;">Cenário:</strong> Login com credenciais válidas</p>
+    <p class="fragment fade-up"><strong style="color: #f97316;">Pré-condição:</strong> Usuário cadastrado no sistema</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE: EXEMPLO CASO DE TESTE 1B -->
+<div class="slide-content">
+  <h2>Caso de Teste — <span>Login</span></h2>
+  <p style="margin-bottom: 16px;">Entrada e resultado esperado.</p>
+  <div class="divider"></div>
+  <div class="unit-card">
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #00d4ff;">Entrada:</strong> E-mail: joao@email.com | Senha: 123456</p>
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #22c55e;">Resultado esperado:</strong> Redirecionado para o painel</p>
+    <p class="fragment fade-up"><strong style="color: #94a3b8;">Resultado obtido:</strong> —</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE: EXEMPLO CASO DE TESTE 2A -->
+<div class="slide-content">
+  <h2>Caso de Teste — <span>Cadastro</span></h2>
+  <p style="margin-bottom: 16px;">Validando regras de negócio.</p>
+  <div class="divider"></div>
+  <div class="unit-card">
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #00d4ff;">ID:</strong> CT-CAD-001</p>
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #fff;">Cenário:</strong> Cadastro com e-mail duplicado</p>
+    <p class="fragment fade-up"><strong style="color: #f97316;">Pré-condição:</strong> E-mail joao@email.com já existe</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE: EXEMPLO CASO DE TESTE 2B -->
+<div class="slide-content">
+  <h2>Caso de Teste — <span>Cadastro</span></h2>
+  <p style="margin-bottom: 16px;">Entrada e resultado esperado.</p>
+  <div class="divider"></div>
+  <div class="unit-card">
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #00d4ff;">Entrada:</strong> Nome: João | E-mail: joao@email.com | Senha: 123456</p>
+    <p class="fragment fade-up" style="margin-bottom: 6px;"><strong style="color: #ef4444;">Resultado esperado:</strong> Mensagem "E-mail já cadastrado"</p>
+    <p class="fragment fade-up"><strong style="color: #94a3b8;">Resultado obtido:</strong> —</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 27: CRITÉRIOS DE ACEITAÇÃO -->
+<div class="slide-content">
+  <h2>Critérios de <span>Aceitação</span></h2>
+  <p style="margin-bottom: 20px;">Definindo quando está "pronto".</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Definição:</strong> Condições que devem ser satisfeitas para que o software seja aceito</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Requisitos:</strong> Base para definir os critérios</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Exemplo:</strong> "Usuário deve conseguir fazer login em menos de 3 segundos"</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Importância:</strong> Evita ambiguidades e conflitos</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE: EXEMPLO CRITÉRIO DE ACEITAÇÃO 1 -->
+<div class="slide-content">
+  <h2>Critério de Aceitação — <span>Login</span></h2>
+  <p style="margin-bottom: 16px;">Definindo quando a funcionalidade está pronta.</p>
+  <div class="divider"></div>
+  <div class="unit-card">
+    <p style="margin-bottom: 8px;"><strong style="color: #f97316;">CA-LOGIN-001:</strong> O usuário deve conseguir fazer login com e-mail e senha válidos</p>
+    <ul style="margin-top: 10px;">
+      <li class="fragment fade-up"><strong style="color: #22c55e;">DADO</strong> que o usuário está na tela de login</li>
+      <li class="fragment fade-up"><strong style="color: #00d4ff;">QUANDO</strong> insere credenciais válidas</li>
+      <li class="fragment fade-up"><strong style="color: #f97316;">ENTÃO</strong> é redirecionado para o painel em até 3 segundos</li>
+    </ul>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE: EXEMPLO CRITÉRIO DE ACEITAÇÃO 2 -->
+<div class="slide-content">
+  <h2>Critério de Aceitação — <span>Carrinho</span></h2>
+  <p style="margin-bottom: 16px;">Critérios para funcionalidade de compras.</p>
+  <div class="divider"></div>
+  <div class="unit-card">
+    <p style="margin-bottom: 8px;"><strong style="color: #f97316;">CA-CARR-001:</strong> Adicionar produto ao carrinho</p>
+    <ul style="margin-top: 10px;">
+      <li class="fragment fade-up"><strong style="color: #22c55e;">DADO</strong> que o usuário está na página do produto</li>
+      <li class="fragment fade-up"><strong style="color: #00d4ff;">QUANDO</strong> clica em "Adicionar ao carrinho"</li>
+      <li class="fragment fade-up"><strong style="color: #f97316;">ENTÃO</strong> o contador do carrinho incrementa em 1</li>
+      <li class="fragment fade-up"><strong style="color: #94a3b8;">E</strong> uma notificação de confirmação é exibida</li>
+    </ul>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 28: RESUMO DA UNIDADE I -->
+<div class="slide-content">
+  <h2>Resumo – <span>Unidade I</span></h2>
+  <p style="margin-bottom: 20px;">O que aprendemos hoje.</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Verificação:</strong> "Construir da forma correta" — conforme especificações</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Validação:</strong> "Construir o certo" — atendendo necessidades do usuário</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Fundamentos:</strong> Princípios essenciais de testes</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Teste Funcional:</strong> Validar requisitos funcionais</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 28B: RESUMO DA UNIDADE I (cont.) -->
+<div class="slide-content">
+  <h2>Resumo – <span>Unidade I</span></h2>
+  <p style="margin-bottom: 20px;">Continuação do resumo.</p>
+  <ul>
+    <li class="fragment fade-up"><strong style="color: #fff;">Níveis de teste:</strong> Unidade, integração, sistema, regressão, aceitação</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Exemplos práticos:</strong> Casos de teste para Login e Cadastro</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Critérios:</strong> Definir quando o software está pronto</li>
+    <li class="fragment fade-up"><strong style="color: #fff;">Exemplos:</strong> Critérios usando Given/When/Then (DADO/QUANDO/ENTÃO)</li>
+  </ul>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 29: DÚVIDAS -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <h2 style="border-left: none !important; padding-left: 0 !important;">Dúvidas ou <span>Perguntas</span>?</h2>
+  <p style="max-width: 700px; margin: 30px auto; font-size: 29px !important;">Sinta-se à vontade para fazer perguntas!</p>
+  <div class="divider" style="width: 200px; margin: 30px auto;"></div>
+  <p><strong style="color: #fff;">E-mail:</strong> <code>jonh.sousa@professor.unifametro.edu.br</code></p>
+  <p><strong style="color: #fff;">Site:</strong> <code>jonhsousa.com.br</code></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 30: QUIZ DE FIXAÇÃO - INTRO -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <div class="mono orange" style="font-size: 18px; margin-bottom: 20px;">BORA FIXAR?</div>
+  <h1 style="font-size: 58px !important;">O <span class="orange">DESAFIO</span><br></br>DA SEMANA</h1>
+  <div style="height: 2px; width: 100px; background: linear-gradient(90deg, #f97316, #00d4ff); margin: 40px 0;"></div>
+  <div class="mono" style="font-size: 14px; color: #475569;">QUIZ DE FIXAÇÃO: 5 PERGUNTAS</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 31: QUIZ 1 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 01:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Quais são os <span>5 níveis de teste</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> Unitário, Integração, Sistema, Regressão, Aceitação</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Manual, Automatizado, Funcional, Estrutural, Exploratório</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> Preparação, Execução, Análise, Relatório, Encerramento</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> Planejamento, Design, Implementação, Execução, Avaliação</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 32: QUIZ 1 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 01:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Quais são os <span>5 níveis de teste</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">A)</strong> Unitário, Integração, Sistema, Regressão, Aceitação</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">B)</strong> Manual, Automatizado, Funcional, Estrutural, Exploratório</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> Preparação, Execução, Análise, Relatório, Encerramento</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> Planejamento, Design, Implementação, Execução, Avaliação</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 33: QUIZ 2 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 02:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">O que é <span>teste de aceitação</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> Testar componentes isolados do sistema</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Testar se o software funciona conforme requisitos funcionais</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> Validação final com o cliente para garantir que atende suas necessidades</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> Testar se alterações não quebraram funcionalidades existentes</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 34: QUIZ 2 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 02:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">O que é <span>teste de aceitação</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> Testar componentes isolados do sistema</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">B)</strong> Testar se o software funciona conforme requisitos funcionais</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">C)</strong> Validação final com o cliente para garantir que atende suas necessidades</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> Testar se alterações não quebraram funcionalidades existentes</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 35: QUIZ 3 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 03:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual é o foco do <span>teste funcional</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> Estrutura interna do código</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Requisitos funcionais do sistema</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> Desempenho e escalabilidade</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> Segurança e vulnerabilidades</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 36: QUIZ 3 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 03:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual é o foco do <span>teste funcional</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> Estrutura interna do código</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> Requisitos funcionais do sistema</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> Desempenho e escalabilidade</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> Segurança e vulnerabilidades</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 37: QUIZ 4 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 04:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual é um dos <span>fundamentos de testes</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> Testar tudo exaustivamente é possível</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Sempre haverá defeitos escondidos (falhas residuais)</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> Testar não é necessário em projetos ágeis</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> Um único teste é suficiente para garantir qualidade</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 38: QUIZ 4 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 04:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual é um dos <span>fundamentos de testes</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> Testar tudo exaustivamente é possível</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> Sempre haverá defeitos escondidos (falhas residuais)</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> Testar não é necessário em projetos ágeis</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> Um único teste é suficiente para garantir qualidade</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 39: QUIZ 5 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 05:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Por que <span>critérios de aceitação</span> são importantes?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> Para tornar o desenvolvimento mais lento</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Para evitar ambiguidades e conflitos sobre o que é "pronto"</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> Para substituir a documentação</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> Para eliminar a necessidade de testes</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 40: QUIZ 5 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 05:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Por que <span>critérios de aceitação</span> são importantes?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> Para tornar o desenvolvimento mais lento</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> Para evitar ambiguidades e conflitos sobre o que é "pronto"</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> Para substituir a documentação</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> Para eliminar a necessidade de testes</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 41: LIÇÃO DE CASA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">LIÇÃO DE CASA:</div>
+  <h2>Exercício <span>Prático</span></h2>
+  <p style="margin-bottom: 20px;">Análise de Testes no Dia a Dia</p>
+  <div class="divider"></div>
+  <ol style="list-style: none; padding: 0; margin-top: 20px;">
+    <li class="fragment fade-up" style="margin-bottom: 8px;"><strong style="color: #f97316;">01</strong>&nbsp;&nbsp;Escolha um <strong style="color: #fff;">app ou site</strong> que você usa diariamente.</li>
+    <li class="fragment fade-up" style="margin-bottom: 8px;"><strong style="color: #f97316;">02</strong>&nbsp;&nbsp;Identifique 3 <strong style="color: #fff;">funcionalidades</strong> que poderiam ser testadas.</li>
+    <li class="fragment fade-up" style="margin-bottom: 8px;"><strong style="color: #f97316;">03</strong>&nbsp;&nbsp;Escreva 2 <strong style="color: #fff;">casos de teste</strong> para cada funcionalidade.</li>
+    <li class="fragment fade-up"><strong style="color: #f97316;">04</strong>&nbsp;&nbsp;Classifique cada caso como <strong style="color: #fff;">funcional</strong> ou <strong style="color: #fff;">estrutural</strong>.</li>
+  </ol>
+  <div class="divider fragment fade-up"></div>
+  <p class="fragment fade-up"><strong style="color: #00d4ff;">Entrega:</strong> Próxima aula (meio digital).</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- FIM DA AULA 1 -->
+<!-- SLIDE 42: ENCERRAMENTO -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <div class="fragment fade-up" style="max-width: 900px;">
+    <h2 class="blue" style="border-left: none !important; padding-left: 0 !important; font-size: 43px !important; font-style: italic; line-height: 1.4 !important;">
+      "Testar mostra a presença de bugs, não a ausência deles."
+    </h2>
+    <p style="font-size: 25px !important; color: #94a3b8 !important; margin-top: 20px;">— Edsger Dijkstra, cientista da computação</p>
+  </div>
+  <div class="fragment fade-up" style="margin-top: 50px;">
+    <h1 style="font-size: 43px !important; letter-spacing: 5px;">BORA <span class="blue">PRA CIMA</span>!</h1>
+  </div>
+</div>
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

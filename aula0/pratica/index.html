@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prática 1 - Teste de Software - UNIFAMETRO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #020617;
+      color: #94a3b8;
+      font-family: 'Urbanist', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px;
+      flex: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header .tag {
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #00d4ff;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+      font-size: 36px;
+    }
+
+    .header h1 span {
+      color: #00d4ff;
+    }
+
+    .header .divider-line {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #00d4ff, #f97316);
+      margin: 24px auto;
+      border-radius: 2px;
+    }
+
+    .header p {
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 24px;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: #00d4ff; }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar .info {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .toolbar .info span {
+      color: #f97316;
+    }
+
+    .btn {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00d4ff, #0099cc);
+      color: #020617;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.25);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .btn-icon {
+      padding: 8px;
+      width: 34px;
+      height: 34px;
+      justify-content: center;
+    }
+
+    .btn-edit {
+      background: rgba(0, 212, 255, 0.1);
+      color: #00d4ff;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+    }
+    .btn-edit:hover { background: rgba(0, 212, 255, 0.2); }
+
+    .btn-delete {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    .btn-delete:hover { background: rgba(239, 68, 68, 0.2); }
+
+    .table-wrapper {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #64748b;
+      padding: 16px 20px;
+      text-align: left;
+      border-bottom: 1px solid #1e293b;
+      background: #0a0f1e;
+    }
+
+    tbody td {
+      padding: 14px 20px;
+      border-bottom: 1px solid #1e293b;
+      font-size: 14px;
+      color: #cbd5e1;
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover {
+      background: rgba(0, 212, 255, 0.03);
+    }
+
+    tbody td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: #475569;
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #475569;
+    }
+    .empty-state i {
+      font-size: 48px;
+      color: #1e293b;
+      margin-bottom: 16px;
+    }
+    .empty-state p {
+      font-size: 16px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 28px 0;
+    }
+
+    .modal-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hint-btn {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      color: #f97316;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .hint-btn:hover {
+      background: rgba(249, 115, 22, 0.2);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #475569;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.3s;
+    }
+    .modal-close:hover { color: #ef4444; }
+
+    .hint-panel {
+      display: none;
+      margin: 0 28px 20px;
+      background: rgba(249, 115, 22, 0.06);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+    .hint-panel.active { display: block; }
+
+    .hint-panel h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f97316;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hint-list {
+      list-style: none;
+      counter-reset: test-counter;
+    }
+
+    .hint-list li {
+      counter-increment: test-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(249, 115, 22, 0.08);
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+    .hint-list li:last-child { border-bottom: none; }
+
+    .hint-list li::before {
+      content: counter(test-counter, decimal-leading-zero);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.1);
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .hint-list code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: rgba(0, 212, 255, 0.08);
+      color: #00d4ff;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    .modal-body { padding: 24px 28px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group label .required {
+      color: #ef4444;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #00d4ff;
+    }
+
+    .form-group input.error,
+    .form-group select.error {
+      border-color: #ef4444;
+    }
+
+    .form-group .error-msg {
+      color: #ef4444;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .form-group input.error + .error-msg,
+    .form-group select.error + .error-msg {
+      display: block;
+    }
+
+    .form-hint {
+      font-size: 11px;
+      color: #475569;
+      margin-top: 4px;
+      font-style: italic;
+      display: none;
+    }
+    .form-hint.active { display: block; }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 0 28px 24px;
+    }
+
+    .btn-cancel {
+      background: transparent;
+      color: #64748b;
+      border: 1px solid #1e293b;
+    }
+    .btn-cancel:hover { border-color: #475569; color: #94a3b8; }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .toast.success { border-left: 3px solid #22c55e; }
+    .toast.success i { color: #22c55e; }
+    .toast.error { border-left: 3px solid #ef4444; }
+    .toast.error i { color: #ef4444; }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .footer {
+      border-top: 1px solid #1e293b;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer .divider-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #00d4ff, #f97316);
+      margin: 0 auto 16px;
+      border-radius: 2px;
+    }
+
+    .footer .copy {
+      color: #334155;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .form-row { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+
+    <div class="header">
+      <div class="tag">UNIFAMETRO | PROF. JONH SOUSA</div>
+      <h1>Prática 1 — <span>Cadastro de Usuários</span></h1>
+      <div class="divider-line"></div>
+      <p>CRUD com validações intencionalmente falhas para demonstração de testes</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="info">Registros: <span id="count">0</span></div>
+      <button class="btn btn-primary" onclick="openModal()">
+        <i class="fas fa-plus"></i> Novo Usuário
+      </button>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>E-mail</th>
+            <th>Data Nasc.</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+      <div class="empty-state" id="emptyState">
+        <i class="fas fa-users"></i>
+        <p>Nenhum usuário cadastrado</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Novo Usuário</h2>
+        <div class="modal-header-actions">
+          <button class="hint-btn" id="hintBtn" onclick="toggleHint()" title="Lista de testes para validação">
+            <i class="fas fa-flask"></i>
+          </button>
+          <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <div class="hint-panel" id="hintPanel">
+        <h3><i class="fas fa-bug"></i> Casos de Teste — Validar Bugs</h3>
+        <ol class="hint-list">
+          <li>Campo <strong>CPF</strong>: inserir letras (ex: <code>ABC.DEF.GHI-JK</code>) e confirmar que o sistema aceita sem erro</li>
+          <li>Campo <strong>CPF</strong>: inserir formato inválido (ex: <code>123</code>) e confirmar que salva sem validação de dígitos verificadores</li>
+          <li>Campo <strong>CPF</strong>: cadastrar dois usuários com o <strong>mesmo CPF</strong> e confirmar que não há bloqueio de duplicidade</li>
+          <li>Campo <strong>Telefone</strong>: inserir letras (ex: <code>(AB) CDEFG-HIJK</code>) e confirmar aceitação</li>
+          <li>Campo <strong>E-mail</strong>: inserir formato inválido (ex: <code>abc</code>, <code>@x@x</code>, <code>teste</code>) e confirmar que salva sem erro</li>
+          <li>Campo <strong>Data de Nascimento</strong>: inserir dia <code>32</code> ou mês <code>13</code> e confirmar que aceita</li>
+          <li>Campo <strong>Data de Nascimento</strong>: inserir <code>00/00/0000</code> e confirmar aceitação</li>
+          <li>Campo <strong>Senha</strong>: cadastrar com senha de 1 caractere (ex: <code>1</code>) e confirmar que aceita sem mínimo</li>
+          <li>Campo <strong>Confirmar Senha</strong>: preencher senhas <strong>diferentes</strong> e confirmar que o sistema salva sem alertar</li>
+          <li><strong>Campos obrigatórios</strong>: deixar todos os campos vazios e submeter — o formulário bloqueia apenas com check de vazio, sem validação de formato</li>
+        </ol>
+      </div>
+      <div class="modal-body">
+        <form id="userForm" onsubmit="return handleSubmit(event)">
+          <input type="hidden" id="editId" value="">
+
+          <div class="form-group">
+            <label>Nome Completo <span class="required">*</span></label>
+            <input type="text" id="nome" placeholder="Ex: João da Silva">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>CPF <span class="required">*</span></label>
+              <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14">
+              <div class="form-hint">⚠ Aceita letras (bug intencional)</div>
+            </div>
+            <div class="form-group">
+              <label>Telefone</label>
+              <input type="text" id="telefone" placeholder="(00) 00000-0000">
+              <div class="form-hint">⚠ Aceita letras (bug intencional)</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>E-mail <span class="required">*</span></label>
+            <input type="text" id="email" placeholder="exemplo@email.com">
+            <div class="form-hint">⚠ Validação de formato ausente (bug intencional)</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Data de Nascimento <span class="required">*</span></label>
+              <input type="text" id="dataNascimento" placeholder="DD/MM/AAAA" maxlength="10">
+              <div class="form-hint">⚠ Não valida dia/mês (bug intencional)</div>
+            </div>
+            <div class="form-group">
+              <label>Senha <span class="required">*</span></label>
+              <input type="password" id="senha" placeholder="Mínimo 6 caracteres">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Confirmar Senha</label>
+            <input type="password" id="confirmarSenha" placeholder="Repita a senha">
+            <div class="form-hint">⚠ Não confere se senhas coincidem (bug intencional)</div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-cancel" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="handleSubmit(event)">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer class="footer">
+    <div class="divider-line"></div>
+    <div class="copy">&copy; 2026 Prof. Jonh Sousa - UNIFAMETRO</div>
+  </footer>
+
+  <script>
+    let usuarios = [
+      {
+        id: 1,
+        nome: "Maria Souza",
+        cpf: "123.456.789-00",
+        email: "maria@email.com",
+        telefone: "(11) 99999-1234",
+        dataNascimento: "15/03/1995",
+        senha: "123456"
+      },
+      {
+        id: 2,
+        nome: "Carlos Alberto",
+        cpf: "987.654.321-00",
+        email: "carlos@email.com",
+        telefone: "(21) 98888-5678",
+        dataNascimento: "22/07/1988",
+        senha: "abcdef"
+      }
+    ];
+
+    let nextId = 3;
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      const empty = document.getElementById('emptyState');
+      const count = document.getElementById('count');
+
+      count.textContent = usuarios.length;
+
+      if (usuarios.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      tbody.innerHTML = usuarios.map(u => `
+        <tr>
+          <td>${String(u.id).padStart(3, '0')}</td>
+          <td>${escapeHtml(u.nome)}</td>
+          <td>${escapeHtml(u.cpf)}</td>
+          <td>${escapeHtml(u.email)}</td>
+          <td>${escapeHtml(u.dataNascimento)}</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-icon btn-edit" title="Editar" onclick="editUser(${u.id})">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn btn-icon btn-delete" title="Excluir" onclick="deleteUser(${u.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById('modal');
+      const title = document.getElementById('modalTitle');
+      const form = document.getElementById('userForm');
+
+      form.reset();
+      document.getElementById('editId').value = '';
+
+      if (id) {
+        const user = usuarios.find(u => u.id === id);
+        if (user) {
+          title.textContent = 'Editar Usuário';
+          document.getElementById('editId').value = user.id;
+          document.getElementById('nome').value = user.nome;
+          document.getElementById('cpf').value = user.cpf;
+          document.getElementById('email').value = user.email;
+          document.getElementById('telefone').value = user.telefone;
+          document.getElementById('dataNascimento').value = user.dataNascimento;
+          document.getElementById('senha').value = user.senha;
+          document.getElementById('confirmarSenha').value = user.senha;
+        }
+      } else {
+        title.textContent = 'Novo Usuário';
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.getElementById('hintPanel').classList.remove('active');
+    }
+
+    function editUser(id) {
+      openModal(id);
+    }
+
+    function deleteUser(id) {
+      if (confirm('Deseja realmente excluir este usuário?')) {
+        usuarios = usuarios.filter(u => u.id !== id);
+        renderTable();
+        showToast('Usuário excluído com sucesso', 'success');
+      }
+    }
+
+    function handleSubmit(e) {
+      if (e) e.preventDefault();
+
+      const editId = document.getElementById('editId').value;
+      const nome = document.getElementById('nome').value.trim();
+      const cpf = document.getElementById('cpf').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const telefone = document.getElementById('telefone').value.trim();
+      const dataNascimento = document.getElementById('dataNascimento').value.trim();
+      const senha = document.getElementById('senha').value;
+      const confirmarSenha = document.getElementById('confirmarSenha').value;
+
+      // ==========================================
+      // BUGS INTENCIONAIS DE VALIDAÇÃO
+      // (propósitos para demonstração de testes)
+      // ==========================================
+
+      // BUG 1: CPF aceita letras — não valida se é numérico
+      // BUG 2: Data de nascimento não valida mês (1-12) nem dia (1-31)
+      // BUG 3: E-mail não valida formato
+      // BUG 4: Telefone aceita letras
+      // BUG 5: Senha e confirmação não conferem se coincidem
+      // BUG 6: Campos "required" não são realmente obrigatórios (só vazio)
+      // BUG 7: CPF não valida dígitos verificadores
+      // BUG 8: Não valida se o usuário já existe (CPF duplicado)
+
+      // Validação apenas de campos vazios (mínima)
+      if (!nome || !cpf || !email || !dataNascimento || !senha) {
+        showToast('Preencha todos os campos obrigatórios', 'error');
+        return false;
+      }
+
+      const userData = {
+        id: editId ? parseInt(editId) : nextId++,
+        nome,
+        cpf,
+        email,
+        telefone,
+        dataNascimento,
+        senha
+      };
+
+      if (editId) {
+        const idx = usuarios.findIndex(u => u.id === parseInt(editId));
+        if (idx !== -1) usuarios[idx] = userData;
+        showToast('Usuário atualizado com sucesso', 'success');
+      } else {
+        usuarios.push(userData);
+        showToast('Usuário cadastrado com sucesso', 'success');
+      }
+
+      closeModal();
+      renderTable();
+      return false;
+    }
+
+    function showToast(message, type) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+      toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Máscara CPF
+    document.getElementById('cpf').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      e.target.value = v;
+    });
+
+    // Máscara telefone
+    document.getElementById('telefone').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      v = v.replace(/^(\d{2})(\d)/, '($1) $2');
+      v = v.replace(/(\d{5})(\d)/, '$1-$2');
+      e.target.value = v;
+    });
+
+    // Máscara data
+    document.getElementById('dataNascimento').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      v = v.replace(/(\d{2})(\d)/, '$1/$2');
+      v = v.replace(/(\d{2})(\d{1,4})$/, '$1/$2');
+      e.target.value = v;
+    });
+
+    // Fechar modal com ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Fechar modal clicando fora
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Hint: mostrar botão apenas com ?hint=true na URL
+    function initHint() {
+      const params = new URLSearchParams(window.location.search);
+      const hintBtn = document.getElementById('hintBtn');
+      const hints = document.querySelectorAll('.form-hint');
+      const show = params.get('hint') === 'true';
+      hintBtn.style.display = show ? 'inline-flex' : 'none';
+      hints.forEach(h => h.classList.toggle('active', show));
+    }
+
+    function toggleHint() {
+      const panel = document.getElementById('hintPanel');
+      panel.classList.toggle('active');
+    }
+
+    // Inicializar
+    initHint();
+    renderTable();
+  </script>
+</body>
+</html>
