@@ -23,7 +23,13 @@
       "id": "01",
       "pasta": "aula1",
       "nome": "UNIDADE 1",
-      "descricao": "Prática de design de interfaces centrado no usuário"
+      "descricao": "Introdução e Teste Funcional — Verificação, Validação, Fundamentos, Casos de Teste e Critérios de Aceitação"
+    },
+    {
+      "id": "02",
+      "pasta": "aula2",
+      "nome": "UNIDADE 2",
+      "descricao": "Teste Estrutural e Inspeção — Caixa-branca, Cobertura de Código, Complexidade Ciclomática e Revisão de Código"
     }
   ]
 }

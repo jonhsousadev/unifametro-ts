@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="css/mattropolis.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+    <style>
+      @media print {
+        html.print-pdf body {
+          background: #020617 !important;
+        }
+        html.print-pdf .reveal .slide-background {
+          background: #020617 !important;
+        }
+        html.print-pdf .reveal .slides section {
+          background-color: #020617 !important;
+          color: #fff !important;
+        }
+        html.print-pdf .reveal .slides section h1,
+        html.print-pdf .reveal .slides section h2,
+        html.print-pdf .reveal .slides section h3,
+        html.print-pdf .reveal .slides section h4,
+        html.print-pdf .reveal .slides section h5,
+        html.print-pdf .reveal .slides section p,
+        html.print-pdf .reveal .slides section li,
+        html.print-pdf .reveal .slides section span {
+          color: #fff !important;
+        }
+        html.print-pdf .reveal .slides section a {
+          color: #e7ad52 !important;
+        }
+        html.print-pdf * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    </style>
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.reveal .slides section {
+  padding: 0 !important;
+  background-color: #020617 !important;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.reveal .slides section.present {
+  opacity: 1 !important;
+}
+
+.reveal .slides section:not(.present) {
+  opacity: 0 !important;
+}
+
+.slide-content {
+  width: 100%;
+  height: 100%;
+  padding: 40px 60px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  position: relative;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #00d4ff #0f172a;
+}
+
+.reveal h1 {
+  font-family: 'Urbanist', sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  line-height: 1.1 !important;
+  font-size: 74px !important;
+}
+
+.reveal h2 {
+  font-family: 'Urbanist', sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  border-left: 10px solid #00d4ff;
+  padding-left: 30px !important;
+  margin-bottom: 20px !important;
+  font-size: 56px !important;
+}
+
+.reveal h3 {
+  font-family: 'Urbanist', sans-serif !important;
+  font-weight: 700 !important;
+  color: #f97316 !important;
+  font-size: 37px !important;
+  margin-bottom: 16px !important;
+}
+
+.reveal p, .reveal li {
+  font-family: 'Urbanist', sans-serif !important;
+  color: #94a3b8 !important;
+  font-size: 29px !important;
+  line-height: 1.5 !important;
+}
+
+.reveal ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.reveal ul li::before {
+  content: '▸ ' !important;
+  color: #00d4ff !important;
+  font-weight: bold !important;
+}
+
+.green { color: #22c55e !important; }
+.orange { color: #f97316 !important; }
+.blue { color: #00d4ff !important; }
+.cyan { color: #06b6d4 !important; }
+.mono { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; letter-spacing: 3px; }
+.divider { width: 100%; height: 1px; background: #1e293b; margin: 20px 0; }
+
+.slide-content::after {
+  content: '';
+  position: absolute;
+  bottom: 30px;
+  left: 60px;
+  width: 100px;
+  height: 6px;
+  background: linear-gradient(90deg, #00d4ff, #f97316);
+}
+
+.reveal .fragment {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal .fragment.visible {
+  opacity: 1;
+}
+
+.reveal .fragment.fade-up {
+  transform: translateY(15px);
+}
+
+.reveal .fragment.visible.fade-up {
+  transform: translateY(0);
+}
+
+.quiz-option {
+  background: #0f172a !important;
+  border: 2px solid #1e293b !important;
+  border-radius: 8px !important;
+  padding: 10px 16px !important;
+  margin-bottom: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.quiz-option p {
+  font-size: 21px !important;
+  margin: 0 !important;
+}
+
+.quiz-option.correct {
+  border-color: #22c55e !important;
+  background: rgba(34, 197, 94, 0.15) !important;
+}
+
+.quiz-option.incorrect {
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+.unit-card {
+  background: #0f172a !important;
+  border: 2px solid #1e293b !important;
+  border-left: 4px solid #00d4ff !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.unit-card:hover {
+  border-color: #00d4ff !important;
+  transform: translateX(5px);
+}
+
+.code-block {
+  background: #0f172a !important;
+  border: 2px solid #1e293b !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 12px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 18px !important;
+  color: #e2e8f0 !important;
+  line-height: 1.6 !important;
+  overflow-x: auto;
+}
+
+.code-block .keyword { color: #c084fc !important; }
+.code-block .string { color: #22c55e !important; }
+.code-block .comment { color: #64748b !important; }
+.code-block .number { color: #f97316 !important; }
+.code-block .function { color: #00d4ff !important; }
+</style>
+
+<!-- AULA 02: TESTE ESTRUTURAL — BRANCHES, PATHS E EXEMPLOS -->
+<!-- SLIDE 1: CAPA -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <div class="mono blue" style="font-size: 24px; margin-bottom: 24px;">AULA 02</div>
+  <h1 style="font-size: 41px !important;">TESTE ESTRUTURAL<br><span class="blue" style="font-size: 54px !important;">BRANCHES, PATHS<br>E COBERTURA</span></h1>
+  <div style="height: 2px; width: 100px; background: linear-gradient(90deg, #00d4ff, #f97316); margin: 40px 0;"></div>
+  <div class="mono" style="font-size: 16px; color: #475569;">UNIFAMETRO | PROF. JONH SOUSA</div>
+  <div class="mono" style="font-size: 14px; color: #475569; margin-top: 10px;">3 EXEMPLOS PRÁTICOS EM SALA</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 2: O QUE É UM BRANCH -->
+<div class="slide-content">
+  <h2>O que é um <span>Branch</span>?</h2>
+  <p style="margin-bottom: 16px;">Toda vez que o código "toma uma decisão".</p>
+  <div class="unit-card">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">Branch = Ramificação</strong></p>
+    <p style="margin: 8px 0 0 0; font-size: 20px !important;">Um <code style="color: #c084fc;">if</code> gera <strong style="color: #22c55e;">2 branches</strong>: TRUE e FALSE</p>
+  </div>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="keyword">if</span> (idade >= <span class="number">18</span>) {<br>
+    &nbsp;&nbsp;<span class="comment">// Branch 1: TRUE (idade >= 18)</span><br>
+    } <span class="keyword">else</span> {<br>
+    &nbsp;&nbsp;<span class="comment">// Branch 2: FALSE (idade < 18)</span><br>
+    }
+  </div>
+  <p class="fragment fade-up" style="margin-top: 12px; font-size: 22px !important;"><strong style="color: #f97316;">Regra:</strong> Se tem decisão, tem branch. Se tem branch, tem que testar os dois lados.</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 3: O QUE É UM PATH -->
+<div class="slide-content">
+  <h2>O que é um <span>Path</span>?</h2>
+  <p style="margin-bottom: 16px;">Um caminho completo de execução do início ao fim.</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="keyword">let</span> x = <span class="number">1</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// início</span><br>
+    <span class="keyword">if</span> (x > <span class="number">0</span>) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// decisão 1</span><br>
+    &nbsp;&nbsp;x = x + <span class="number">1</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// caminho A</span><br>
+    } <span class="keyword">else</span> {<br>
+    &nbsp;&nbsp;x = x - <span class="number">1</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// caminho B</span><br>
+    }<br>
+    <span class="keyword">return</span> x;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// fim</span>
+  </div>
+  <div class="unit-card fragment fade-up">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">2 paths possíveis:</strong></p>
+    <p style="margin: 4px 0 0 0; font-size: 20px !important;">Path A: 1 → x > 0? TRUE → x = 2 → return 2</p>
+    <p style="margin: 4px 0 0 0; font-size: 20px !important;">Path B: 1 → x > 0? FALSE → x = 0 → return 0</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 4: COBERTURA — OS 3 NÍVEIS -->
+<div class="slide-content">
+  <h2>Cobertura — <span>Os 3 Níveis</span></h2>
+  <p style="margin-bottom: 16px;">O quanto do nosso código foi realmente testado.</p>
+  <div class="unit-card">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">Statement Coverage:</strong> Linhas executadas</p>
+    <p style="margin: 4px 0 0 0; font-size: 18px !important; color: #64748b !important;">"Cada linha rodou pelo menos uma vez?"</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #f97316 !important;">
+    <p style="margin: 0;"><strong style="color: #f97316;">Branch Coverage:</strong> Ramificações testadas</p>
+    <p style="margin: 4px 0 0 0; font-size: 18px !important; color: #64748b !important;">"Cada if/else foi para os dois lados?"</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #22c55e !important;">
+    <p style="margin: 0;"><strong style="color: #22c55e;">Path Coverage:</strong> Caminhos completos</p>
+    <p style="margin: 4px 0 0 0; font-size: 18px !important; color: #64748b !important;">"Todos os caminhos possíveis foram percorridos?"</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 5: EXEMPLO 1 — CÓDIGO -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
+  <h2>aplicar<span>Desconto</span></h2>
+  <p style="margin-bottom: 16px;">Essa função está no seu projeto. Será que funciona?</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="keyword">function</span> <span class="function">aplicarDesconto</span>(<br>
+    &nbsp;&nbsp;preco: <span class="keyword">number</span>,<br>
+    &nbsp;&nbsp;tipo: <span class="keyword">string</span><br>
+    ): <span class="keyword">number</span> {<br>
+    &nbsp;&nbsp;<span class="keyword">let</span> desconto = <span class="number">0</span>;<br>
+    &nbsp;&nbsp;<span class="keyword">if</span> (tipo === <span class="string">"vip"</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;desconto = preco * <span class="number">0.2</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else if</span> (tipo === <span class="string">"func"</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;desconto = preco * <span class="number">0.3</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;desconto = preco * <span class="number">0.05</span>;<br>
+    &nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="keyword">return</span> preco - desconto;<br>
+    }
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 6: EXEMPLO 1 — MAPA DE BRANCHES -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
+  <h2>Mapeando os <span>Branches</span></h2>
+  <p style="margin-bottom: 16px;">Quantas decisões temos?</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="keyword">if</span> (tipo === <span class="string">"vip"</span>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch A</span><br>
+    <span class="keyword">else if</span> (tipo === <span class="string">"func"</span>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch B</span><br>
+    <span class="keyword">else</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch C</span>
+  </div>
+  <div class="unit-card fragment fade-up">
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">3 branches = 3 caminhos:</strong></p>
+    <p style="margin-bottom: 4px; font-size: 20px !important;">Path 1: tipo "vip" → desconto 20%</p>
+    <p style="margin-bottom: 4px; font-size: 20px !important;">Path 2: tipo "func" → desconto 30%</p>
+    <p style="font-size: 20px !important;">Path 3: outro tipo → desconto 5%</p>
+  </div>
+  <p class="fragment fade-up" style="margin-top: 12px;"><strong style="color: #22c55e;">3 testes mínimos</strong> para 100% branch coverage.</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 7: EXEMPLO 1 — TESTES -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
+  <h2>Escrevendo os <span>Testes</span></h2>
+  <p style="margin-bottom: 16px;">Um teste para cada branch:</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="function">test</span>(<span class="string">"vip recebe 20% de desconto"</span>, () => {<br>
+    &nbsp;&nbsp;<span class="function">expect</span>(<span class="function">aplicarDesconto</span>(<span class="number">100</span>, <span class="string">"vip"</span>)).<span class="function">toBe</span>(<span class="number">80</span>);<br>
+    });<br><br>
+    <span class="function">test</span>(<span class="string">"func recebe 30% de desconto"</span>, () => {<br>
+    &nbsp;&nbsp;<span class="function">expect</span>(<span class="function">aplicarDesconto</span>(<span class="number">100</span>, <span class="string">"func"</span>)).<span class="function">toBe</span>(<span class="number">70</span>);<br>
+    });<br><br>
+    <span class="function">test</span>(<span class="string">"qualquer outro recebe 5%"</span>, () => {<br>
+    &nbsp;&nbsp;<span class="function">expect</span>(<span class="function">aplicarDesconto</span>(<span class="number">100</span>, <span class="string">"aluno"</span>)).<span class="function">toBe</span>(<span class="number">95</span>);<br>
+    });
+  </div>
+  <p class="fragment fade-up" style="margin-top: 12px;"><strong style="color: #22c55e;">3 testes → 100% branch coverage → confiança total.</strong></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 8: EXEMPLO 2 — CÓDIGO -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
+  <h2>classificar<span>Nota</span></h2>
+  <p style="margin-bottom: 16px;">Analise essa função:</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="keyword">function</span> <span class="function">classificarNota</span>(nota: <span class="keyword">number</span>): <span class="keyword">string</span> {<br>
+    &nbsp;&nbsp;<span class="keyword">let</span> resultado: <span class="keyword">string</span>;<br>
+    &nbsp;&nbsp;<span class="keyword">if</span> (nota >= <span class="number">7</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;resultado = <span class="string">"Aprovado"</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else if</span> (nota >= <span class="number">5</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;resultado = <span class="string">"Recuperação"</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;resultado = <span class="string">"Reprovado"</span>;<br>
+    &nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="keyword">return</span> resultado;<br>
+    }
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 9: EXEMPLO 2 — MAPA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
+  <h2>Mapeamento de <span>Branches</span></h2>
+  <p style="margin-bottom: 16px;">Quantos caminhos existem?</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch A:</strong> if (nota >= 7) → TRUE / FALSE</p>
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch B:</strong> else if (nota >= 5) → TRUE / FALSE</p>
+    <p><strong style="color: #f97316;">V(G) = 2 + 1 = 3</strong> → mínimo 3 testes</p>
+  </div>
+  <div class="unit-card fragment fade-up" style="border-left-color: #22c55e !important;">
+    <p style="margin-bottom: 4px;"><strong style="color: #22c55e;">Testes para 100% branch:</strong></p>
+    <p style="margin-bottom: 4px; font-size: 20px !important;">classificarNota(8) → "Aprovado" (Branch A: TRUE)</p>
+    <p style="margin-bottom: 4px; font-size: 20px !important;">classificarNota(6) → "Recuperação" (A: FALSE, B: TRUE)</p>
+    <p style="font-size: 20px !important;">classificarNota(3) → "Reprovado" (A: FALSE, B: FALSE)</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 10: EXEMPLO 2 — BUG -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
+  <h2>Tem um <span>Bug</span> Escondido</h2>
+  <p style="margin-bottom: 16px;">O que acontece com classificarNota(NaN)?</p>
+  <div class="unit-card" style="border-left-color: #ef4444 !important;">
+    <p style="margin-bottom: 4px;"><strong style="color: #ef4444;">NaN >= 7</strong> → <strong style="color: #ef4444;">FALSE</strong></p>
+    <p style="margin-bottom: 4px;"><strong style="color: #ef4444;">NaN >= 5</strong> → <strong style="color: #ef4444;">FALSE</strong></p>
+    <p style="margin-bottom: 4px;"><strong style="color: #ef4444;">Resultado:</strong> "Reprovado" ← ERRADO!</p>
+    <p style="font-size: 18px !important; color: #64748b !important;">NaN não deveria retornar "Reprovado", deveria lançar erro.</p>
+  </div>
+  <p class="fragment fade-up" style="margin-top: 16px;"><strong style="color: #f97316;">Teste funcional não pegou isso. Teste estrutural sim!</strong></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 11: EXEMPLO 3 — CÓDIGO -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
+  <h2>calcular<span>Frete</span></h2>
+  <p style="margin-bottom: 16px;">Essa função tem um bug. Consegue ver?</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="keyword">function</span> <span class="function">calcularFrete</span>(<br>
+    &nbsp;&nbsp;peso: <span class="keyword">number</span>,<br>
+    &nbsp;&nbsp;estado: <span class="keyword">string</span><br>
+    ): <span class="keyword">number</span> {<br>
+    &nbsp;&nbsp;<span class="keyword">let</span> frete = <span class="number">0</span>;<br>
+    &nbsp;&nbsp;<span class="keyword">if</span> (peso <= <span class="number">1</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;frete = <span class="number">10</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else if</span> (peso <= <span class="number">5</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;frete = <span class="number">20</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;frete = <span class="number">50</span>;<br>
+    &nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="keyword">if</span> (estado === <span class="string">"SP"</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;frete = frete * <span class="number">0.9</span>;<br>
+    &nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="keyword">return</span> frete;<br>
+    }
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 12: EXEMPLO 3 — MAPA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
+  <h2>Mapeamento de <span>Branches</span></h2>
+  <p style="margin-bottom: 16px;">Essa função tem 2 blocos de decisão:</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Bloco 1 (peso):</strong> if / else if / else → 3 branches</p>
+    <p><strong style="color: #00d4ff;">Bloco 2 (estado):</strong> if → 2 branches (TRUE/FALSE)</p>
+  </div>
+  <div class="unit-card fragment fade-up" style="border-left-color: #f97316 !important;">
+    <p style="margin-bottom: 4px;"><strong style="color: #f97316;">V(G) = 3 + 1 = 4</strong> → mínimo 4 testes</p>
+    <p style="font-size: 20px !important;">Mas na prática, temos <strong style="color: #fff;">3 × 2 = 6 combinações</strong> de path!</p>
+  </div>
+  <p class="fragment fade-up" style="margin-top: 12px; font-size: 22px !important; color: #64748b !important;">Path coverage exige testar todas as combinações — cresce rápido!</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 13: EXEMPLO 3 — BUG -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
+  <h2>Bug <span>Encontrado</span></h2>
+  <p style="margin-bottom: 16px;">O que acontece com peso > 5 e estado "SP"?</p>
+  <div class="unit-card" style="border-left-color: #ef4444 !important;">
+    <p style="margin-bottom: 4px;"><strong style="color: #ef4444;">Entrada:</strong> calcularFrete(10, "SP")</p>
+    <p style="margin-bottom: 4px;"><strong style="color: #ef4444;">peso > 5:</strong> frete = 50</p>
+    <p style="margin-bottom: 4px;"><strong style="color: #ef4444;">estado "SP":</strong> frete = 50 * 0.9 = <strong style="color: #ef4444;">45</strong></p>
+    <p style="font-size: 18px !important; color: #64748b !important;">Desconto de SP deveria valer para todos os pesos? Ou só para leves?</p>
+  </div>
+  <p class="fragment fade-up" style="margin-top: 16px;"><strong style="color: #f97316;">Sem testar o branch D (estado "SP"), esse bug passa despercebido!</strong></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 14: COMPLEXIDADE CICLOMÁTICA -->
+<div class="slide-content">
+  <h2>Complexidade <span>Ciclomática</span></h2>
+  <p style="margin-bottom: 16px;">Quantos testes mínimos você precisa?</p>
+  <div class="unit-card">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">Fórmula:</strong> V(G) = Número de decisões + 1</p>
+  </div>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="comment">// Exemplo 1: aplicarDesconto</span><br>
+    2 decisões (if, else if) → V(G) = <span class="number">3</span><br><br>
+    <span class="comment">// Exemplo 2: classificarNota</span><br>
+    2 decisões (if, else if) → V(G) = <span class="number">3</span><br><br>
+    <span class="comment">// Exemplo 3: calcularFrete</span><br>
+    3 decisões (if, else if, if) → V(G) = <span class="number">4</span>
+  </div>
+  <p class="fragment fade-up" style="margin-top: 12px; font-size: 22px !important; color: #64748b !important;">V(G) > 10? Considere refatorar a função.</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 15: FERRAMENTAS -->
+<div class="slide-content">
+  <h2>Ferramentas</h2>
+  <p style="margin-bottom: 16px;">Na prática, usamos isso aqui:</p>
+  <div class="unit-card">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">Jest --coverage</strong> → Mede statement, branch e function coverage</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #f97316 !important;">
+    <p style="margin: 0;"><strong style="color: #f97316;">ESLint</strong> → Encontra erros sem rodar o código (análise estática)</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #22c55e !important;">
+    <p style="margin: 0;"><strong style="color: #22c55e;">SonarQube</strong> → Análise completa: bugs, segurança, code smells</p>
+  </div>
+  <p class="fragment fade-up" style="margin-top: 16px; font-size: 22px !important; color: #64748b !important;">Não precisa decorar — só saber que existem e quando usar.</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 16: DÚVIDAS -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <h2 style="border-left: none !important; padding-left: 0 !important;">Dúvidas ou <span>Perguntas</span>?</h2>
+  <p style="max-width: 700px; margin: 30px auto; font-size: 29px !important;">Sinta-se à vontade para fazer perguntas!</p>
+  <div class="divider" style="width: 200px; margin: 30px auto;"></div>
+  <p><strong style="color: #fff;">E-mail:</strong> <code>jonh.sousa@professor.unifametro.edu.br</code></p>
+  <p><strong style="color: #fff;">Site:</strong> <code>jonhsousa.com.br</code></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 17: QUIZ INTRO -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <div class="mono orange" style="font-size: 18px; margin-bottom: 20px;">BORA FIXAR?</div>
+  <h1 style="font-size: 58px !important;">O <span class="orange">DESAFIO</span><br>DA SEMANA</h1>
+  <div style="height: 2px; width: 100px; background: linear-gradient(90deg, #f97316, #00d4ff); margin: 40px 0;"></div>
+  <div class="mono" style="font-size: 14px; color: #475569;">5 PERGUNTAS RÁPIDAS</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 18: QUIZ 1 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 01:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Um <span>if/else</span> gera quantos branches?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> 1</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> 2</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> 3</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> 4</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 19: QUIZ 1 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 01:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Um <span>if/else</span> gera quantos branches?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> 1</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> 2 (TRUE e FALSE)</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> 3</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> 4</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 20: QUIZ 2 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 02:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Uma função com 3 <span>if/else</span> tem V(G) igual a:</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> 3</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> 4</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> 6</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> 8</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 21: QUIZ 2 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 02:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Uma função com 3 <span>if/else</span> tem V(G) igual a:</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> 3</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> 4 (3 decisões + 1)</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> 6</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> 8</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 22: QUIZ 3 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 03:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual a diferença entre <span>branch</span> e <span>path</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> São a mesma coisa</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Branch é uma decisão, path é o caminho completo</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> Path é uma decisão, branch é o caminho completo</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> Branch só existe em loops</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 23: QUIZ 3 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 03:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual a diferença entre <span>branch</span> e <span>path</span>?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> São a mesma coisa</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> Branch é uma decisão, path é o caminho completo</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> Path é uma decisão, branch é o caminho completo</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> Branch só existe em loops</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 24: QUIZ 4 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 04:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Se uma função tem <span>branch coverage de 50%</span>, significa que:</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> Metade das linhas foram executadas</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Apenas metade dos caminhos de decisão foram testados</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> Metade dos testes passaram</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> O código tem 50% de chance de ter bug</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 25: QUIZ 4 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 04:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Se uma função tem <span>branch coverage de 50%</span>, significa que:</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> Metade das linhas foram executadas</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> Apenas metade dos caminhos de decisão foram testados</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> Metade dos testes passaram</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> O código tem 50% de chance de ter bug</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 26: QUIZ 5 - PERGUNTA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">PERGUNTA 05:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual o <span>risco</span> de não testar todos os branches?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">A)</strong> O código fica mais lento</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">B)</strong> Bugs em caminhos não testados passam despercebidos</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">C)</strong> O ESLint gera warnings</p>
+  </div>
+  <div class="quiz-option">
+    <p><strong style="color: #00d4ff;">D)</strong> Não tem risco, é opcional</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 27: QUIZ 5 - RESPOSTA -->
+<div class="slide-content">
+  <div class="mono green" style="font-size: 16px; margin-bottom: 12px;">RESPOSTA 05:</div>
+  <h2 style="font-size: 38px !important; margin-bottom: 16px !important;">Qual o <span>risco</span> de não testar todos os branches?</h2>
+  <div class="divider"></div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">A)</strong> O código fica mais lento</p>
+  </div>
+  <div class="quiz-option correct">
+    <p><strong style="color: #22c55e;">B)</strong> Bugs em caminhos não testados passam despercebidos</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">C)</strong> O ESLint gera warnings</p>
+  </div>
+  <div class="quiz-option incorrect">
+    <p><strong style="color: #ef4444;">D)</strong> Não tem risco, é opcional</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 28: LIÇÃO DE CASA -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">LIÇÃO DE CASA:</div>
+  <h2>Analise em <span>Casa</span></h2>
+  <p style="margin-bottom: 16px;">Faça a mesma análise que fizemos em sala:</p>
+  <div class="code-block" style="font-size: 15px !important;">
+    <span class="keyword">function</span> <span class="function">aplicarDesconto</span>(<br>
+    &nbsp;&nbsp;preco: <span class="keyword">number</span>,<br>
+    &nbsp;&nbsp;tipo: <span class="keyword">string</span>,<br>
+    &nbsp;&nbsp;cupom?: <span class="keyword">string</span><br>
+    ): <span class="keyword">number</span> {<br>
+    &nbsp;&nbsp;<span class="keyword">let</span> desconto = <span class="number">0</span>;<br>
+    &nbsp;&nbsp;<span class="keyword">if</span> (tipo === <span class="string">"vip"</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;desconto = preco * <span class="number">0.2</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else if</span> (tipo === <span class="string">"func"</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;desconto = preco * <span class="number">0.3</span>;<br>
+    &nbsp;&nbsp;} <span class="keyword">else</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;desconto = preco * <span class="number">0.05</span>;<br>
+    &nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="keyword">if</span> (cupom === <span class="string">"DESCONTO10"</span>) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;desconto += preco * <span class="number">0.1</span>;<br>
+    &nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="keyword">return</span> preco - desconto;<br>
+    }
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 29: LIÇÃO DE CASA — PERGUNTAS -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">LIÇÃO DE CASA:</div>
+  <h2>Responda:</h2>
+  <ol style="list-style: none; padding: 0; margin-top: 20px;">
+    <li class="fragment fade-up" style="margin-bottom: 16px;"><strong style="color: #f97316;">01</strong>&nbsp;&nbsp;Quantos branches existem nessa função?</li>
+    <li class="fragment fade-up" style="margin-bottom: 16px;"><strong style="color: #f97316;">02</strong>&nbsp;&nbsp;Qual a complexidade ciclomática?</li>
+    <li class="fragment fade-up" style="margin-bottom: 16px;"><strong style="color: #f97316;">03</strong>&nbsp;&nbsp;Liste todos os paths possíveis</li>
+    <li class="fragment fade-up" style="margin-bottom: 16px;"><strong style="color: #f97316;">04</strong>&nbsp;&nbsp;Escreva os testes para 100% branch coverage</li>
+    <li class="fragment fade-up"><strong style="color: #f97316;">05</strong>&nbsp;&nbsp;Tem algum bug escondido? (dica: cupom + tipo "vip")</li>
+  </ol>
+  <div class="divider fragment fade-up"></div>
+  <p class="fragment fade-up"><strong style="color: #00d4ff;">Entrega:</strong> Próxima aula (meio digital).</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- FIM DA AULA 2 -->
+<!-- SLIDE 30: ENCERRAMENTO -->
+<div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
+  <div class="fragment fade-up" style="max-width: 900px;">
+    <h2 class="blue" style="border-left: none !important; padding-left: 0 !important; font-size: 43px !important; font-style: italic; line-height: 1.4 !important;">
+      "Eu não testei meus código para provar que estão corretos.<br>Eu testei para provar que estão ERRADOS."
+    </h2>
+    <p style="font-size: 25px !important; color: #94a3b8 !important; margin-top: 20px;">— Todo desenvolvedor que já levou bug em produção</p>
+  </div>
+  <div class="fragment fade-up" style="margin-top: 50px;">
+    <h1 style="font-size: 43px !important; letter-spacing: 5px;">BORA <span class="blue">PRA CIMA</span>!</h1>
+  </div>
+</div>
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      var isLight = document.documentElement.classList.contains('light');
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>

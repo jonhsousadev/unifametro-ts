@@ -1,0 +1,116 @@
+{
+  "curso": "Teste de Software",
+  "faculdade": "UNIFAMETRO",
+  "professor": "Prof. Jonh Sousa",
+  "totalAulas": 7,
+  "abordagem": "Prática e voltada para desenvolvimento — menos teoria, mais código e ferramentas reais",
+  "aulas": [
+    {
+      "id": "00",
+      "pasta": "aula0",
+      "nome": "Abertura",
+      "status": "concluida",
+      "descricao": "Apresentação da disciplina, metodologia, visão geral de testes, ferramentas e mercado",
+      "temas": ["O que é teste de software", "Por que testar", "Metodologia", "Ementa e 4 unidades", "Ferramentas (Jest, Playwright)", "Mercado QA"],
+      "pratica": true,
+      "praticaDescricao": "CRUD de Usuários com bugs intencionais + Relatório de Falhas"
+    },
+    {
+      "id": "01",
+      "pasta": "aula1",
+      "nome": "Unidade I — Teste Funcional",
+      "status": "concluida",
+      "descricao": "Verificação, Validação, Fundamentos, Teste Funcional, Casos de Teste e Critérios de Aceitação",
+      "temas": ["Verificação vs Validação", "5 Fundamentos de Teste", "Teste Funcional (caixa-preta)", "Tipos de teste funcional", "Caso de teste (estrutura e exemplo)", "Critérios de aceitação (Given/When/Then)"],
+      "pratica": false,
+      "liçãoDeCasa": "Escolher app, identificar 3 funcionalidades, escrever 2 casos de teste cada"
+    },
+    {
+      "id": "02",
+      "pasta": "aula2",
+      "nome": "Unidade II — Teste Estrutural",
+      "status": "concluida",
+      "descricao": "Teste estrutural na prática — cobertura, complexidade ciclomática e ferramentas",
+      "temas": ["Código vs teste funcional", "Mapeamento de branches", "Statement, Branch, Function coverage", "Cobertura com Jest (--coverage)", "Código com bug (exercício)", "Complexidade ciclomática (V(G))", "ESLint (análise estática)", "SonarQube", "Code Review prático", "Checklist do dev"],
+      "pratica": false,
+      "exercicioEmSala": "Analisar função classificar() — branches, V(G), testes, bug NaN"
+    },
+    {
+      "id": "03",
+      "pasta": "aula3",
+      "nome": "Unidade IIIa — Teste Baseado em Modelo",
+      "status": "planejada",
+      "descricao": "Testando com base em modelos — diagramas de estado, tabelas de decisão, transições",
+      "temas": [
+        "Teste baseado em modelo — quando usar",
+        "Diagrama de estado — exemplo com fluxo de login",
+        "Máquina de estados — transições válidas e inválidas",
+        "Tabela de decisão — combinando condições",
+        "Exercício: mapear estados do CRUD de Usuários",
+        "Ferramentas: Mermaid para diagramas, testes de transição"
+      ],
+      "pratica": false,
+      "exercicioEmSala": "Criar diagrama de estados para o fluxo de cadastro e testar cada transição"
+    },
+    {
+      "id": "04",
+      "pasta": "aula4",
+      "nome": "Unidade IIIb — Teste Baseado em Erro",
+      "status": "planejada",
+      "descricao": "Técnicas baseadas em erros comuns — partição, valor limite, mutação",
+      "temas": [
+        "Particionamento de equivalência — dividindo entradas em classes",
+        "Análise de valor limite (boundary value) — testando as bordas",
+        "Tabela de decisão — combinando regras",
+        "Mutação testing — injetando defeitos para validar testes",
+        "Exercício: aplicar BVA no CRUD de Usuários",
+        "Ferramenta: Stryker para mutação em TS"
+      ],
+      "pratica": false,
+      "exercicioEmSala": "Criar classes de equivalência e valores limite para validação de CPF e e-mail"
+    },
+    {
+      "id": "05",
+      "pasta": "aula5",
+      "nome": "Unidade IVa — Teste Baseado em Risco",
+      "status": "planejada",
+      "descricao": "Priorização por risco — como decidir o que testar primeiro",
+      "temas": [
+        "Teste baseado em risco — conceito e importância",
+        "Matriz de risco (probabilidade × impacto)",
+        "Classificação de risco: crítico, alto, médio, baixo",
+        "Como priorizar testes em projeto real",
+        "Exercício: classificar risco das funcionalidades do CRUD",
+        "Risk-based testing em ambientes ágeis"
+      ],
+      "pratica": false,
+      "exercicioEmSala": "Criar matriz de risco para o CRUD e definir ordem de teste"
+    },
+    {
+      "id": "06",
+      "pasta": "aula6",
+      "nome": "Unidade IVb — Automação de Testes",
+      "status": "planejada",
+      "descricao": "Automação com Jest e Playwright — playground de testes automatizados",
+      "temas": [
+        "Quando automatizar (ROI de automação)",
+        "Jest — setup, describe, test, expect",
+        "Jest — mocks, spies, setup/teardown",
+        "Playwright — navegação, seletores, asserções",
+        "Playwright — testes E2E no CRUD de Usuários",
+        "CI/CD — integração de testes no pipeline",
+        "Resumo das 4 unidades"
+      ],
+      "pratica": true,
+      "praticaDescricao": "Playground com Jest + Playwright — escrever suite completa para o CRUD"
+    }
+  ],
+  "notas": {
+    "aula0": "Gerada com Advanced Slides (Obsidian). Prática inclui CRUD com 8 bugs + relatório de 20 falhas.",
+    "aula1": "Quiz com 5 perguntas. Lição de casa: analisar app real.",
+    "aula2": "Foco em código real. Exercício em sala com função classificar(). Checklist do dev ao final.",
+    "aula3-4": "Unidade III dividida em 2 aulas — uma para modelos, outra para erros.",
+    "aula5-6": "Unidade IV dividida em 2 aulas — risco primeiro, automação depois.",
+    "automacao": "Usar playground para Jest + Playwright (definido pelo professor)."
+  }
+}
