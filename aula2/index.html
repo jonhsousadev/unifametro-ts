@@ -387,28 +387,68 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 6: EXEMPLO 1 — MAPA DE BRANCHES -->
+<!-- SLIDE 6: EXEMPLO 1 — MAPA CÓDIGO -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
   <h2>Mapeando os <span>Branches</span></h2>
-  <p style="margin-bottom: 16px;">Quantas decisões temos?</p>
+  <p style="margin-bottom: 16px;">Identificando as decisões no código:</p>
   <div class="code-block" style="font-size: 16px !important;">
     <span class="keyword">SE</span> tipo = <span class="string">"vip"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch A</span><br>
     <span class="keyword">SENÃO SE</span> tipo = <span class="string">"func"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch B</span><br>
     <span class="keyword">SENÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch C</span>
   </div>
-  <div class="unit-card fragment fade-up">
-    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">3 branches = 3 caminhos:</strong></p>
-    <p style="margin-bottom: 4px; font-size: 20px !important;">Path 1: tipo "vip" → desconto 20%</p>
-    <p style="margin-bottom: 4px; font-size: 20px !important;">Path 2: tipo "func" → desconto 30%</p>
-    <p style="font-size: 20px !important;">Path 3: outro tipo → desconto 5%</p>
-  </div>
-  <p class="fragment fade-up" style="margin-top: 12px;"><strong style="color: #22c55e;">3 testes mínimos</strong> para 100% branch coverage.</p>
+  <p style="margin-top: 16px; font-size: 20px !important;">Cada SE / SENÃO SE / SENÃO é um <strong style="color: #00d4ff;">branch</strong>.</p>
 </div>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 7: EXEMPLO 1 — TESTES -->
+<!-- SLIDE 7: EXEMPLO 1 — MAPA BRANCHES -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
+  <h2>Branches <span>Identificados</span></h2>
+  <p style="margin-bottom: 16px;">Cada branch gera TRUE ou FALSE:</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch A:</strong> tipo = "vip" → TRUE ou FALSE</p>
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch B:</strong> tipo = "func" → TRUE ou FALSE</p>
+    <p><strong style="color: #00d4ff;">Branch C:</strong> SENÃO (padrão)</p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;">Total: <strong style="color: #22c55e;">3 branches</strong></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 8: EXEMPLO 1 — MAPA PATHS -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
+  <h2>Paths <span>Possíveis</span></h2>
+  <p style="margin-bottom: 16px;">Caminho completo de execução:</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #22c55e;">Path 1:</strong> tipo "vip" → desconto 20%</p>
+    <p style="margin-bottom: 4px;"><strong style="color: #22c55e;">Path 2:</strong> tipo "func" → desconto 30%</p>
+    <p><strong style="color: #22c55e;">Path 3:</strong> outro tipo → desconto 5%</p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;"><strong style="color: #22c55e;">3 paths = 3 testes mínimos</strong></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 9: EXEMPLO 1 — MAPA V(G) -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
+  <h2>Complexidade <span>V(G)</span></h2>
+  <p style="margin-bottom: 16px;">Quantos testes mínimos?</p>
+  <div class="unit-card">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">Fórmula:</strong> V(G) = decisões + 1</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #f97316 !important; margin-top: 16px;">
+    <p style="margin: 0;"><strong style="color: #f97316;">2 decisões</strong> (SE + SENÃO SE) + 1 = <strong style="color: #22c55e;">V(G) = 3</strong></p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;">Mínimo <strong style="color: #22c55e;">3 testes</strong> para 100% branch coverage.</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 10: EXEMPLO 1 — TESTES -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 01:</div>
   <h2>Escrevendo os <span>Testes</span></h2>
@@ -426,7 +466,7 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 8: EXEMPLO 2 — CÓDIGO -->
+<!-- SLIDE 11: EXEMPLO 2 — CÓDIGO -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
   <h2>classificar<span>Nota</span></h2>
@@ -447,27 +487,68 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 9: EXEMPLO 2 — MAPA -->
+<!-- SLIDE 12: EXEMPLO 2 — MAPA CÓDIGO -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
   <h2>Mapeamento de <span>Branches</span></h2>
-  <p style="margin-bottom: 16px;">Quantos caminhos existem?</p>
-  <div class="unit-card">
-    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch A:</strong> SE nota >= 7 → TRUE / FALSE</p>
-    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch B:</strong> SENÃO SE nota >= 5 → TRUE / FALSE</p>
-    <p><strong style="color: #f97316;">V(G) = 2 + 1 = 3</strong> → mínimo 3 testes</p>
+  <p style="margin-bottom: 16px;">Identificando as decisões:</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="keyword">SE</span> nota >= <span class="number">7</span> <span class="keyword">ENTÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch A</span><br>
+    <span class="keyword">SENÃO SE</span> nota >= <span class="number">5</span> <span class="keyword">ENTÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch B</span><br>
+    <span class="keyword">SENÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch C</span>
   </div>
-  <div class="unit-card fragment fade-up" style="border-left-color: #22c55e !important;">
-    <p style="margin-bottom: 4px;"><strong style="color: #22c55e;">Testes para 100% branch:</strong></p>
-    <p style="margin-bottom: 4px; font-size: 20px !important;">classificarNota(8) → "Aprovado" (Branch A: TRUE)</p>
-    <p style="margin-bottom: 4px; font-size: 20px !important;">classificarNota(6) → "Recuperação" (A: FALSE, B: TRUE)</p>
-    <p style="font-size: 20px !important;">classificarNota(3) → "Reprovado" (A: FALSE, B: FALSE)</p>
-  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;">Cada SE / SENÃO SE / SENÃO é um <strong style="color: #00d4ff;">branch</strong>.</p>
 </div>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 10: EXEMPLO 2 — BUG -->
+<!-- SLIDE 13: EXEMPLO 2 — MAPA BRANCHES -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
+  <h2>Branches <span>Identificados</span></h2>
+  <p style="margin-bottom: 16px;">Cada branch gera TRUE ou FALSE:</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch A:</strong> nota >= 7 → TRUE (aprovado) ou FALSE</p>
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Branch B:</strong> nota >= 5 → TRUE (recuperação) ou FALSE</p>
+    <p><strong style="color: #00d4ff;">Branch C:</strong> SENÃO → FALSE (reprovado)</p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;">Total: <strong style="color: #22c55e;">3 branches</strong></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 14: EXEMPLO 2 — MAPA PATHS -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
+  <h2>Paths <span>Possíveis</span></h2>
+  <p style="margin-bottom: 16px;">Caminho completo de execução:</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #22c55e;">Path 1:</strong> nota 8 → A: TRUE → "Aprovado"</p>
+    <p style="margin-bottom: 4px;"><strong style="color: #22c55e;">Path 2:</strong> nota 6 → A: FALSE, B: TRUE → "Recuperação"</p>
+    <p><strong style="color: #22c55e;">Path 3:</strong> nota 3 → A: FALSE, B: FALSE → "Reprovado"</p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;"><strong style="color: #22c55e;">3 paths = 3 testes mínimos</strong></p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 15: EXEMPLO 2 — MAPA V(G) -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
+  <h2>Complexidade <span>V(G)</span></h2>
+  <p style="margin-bottom: 16px;">Quantos testes mínimos?</p>
+  <div class="unit-card">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">Fórmula:</strong> V(G) = decisões + 1</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #f97316 !important; margin-top: 16px;">
+    <p style="margin: 0;"><strong style="color: #f97316;">2 decisões</strong> (SE + SENÃO SE) + 1 = <strong style="color: #22c55e;">V(G) = 3</strong></p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;">Mínimo <strong style="color: #22c55e;">3 testes</strong> para 100% branch coverage.</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 16: EXEMPLO 2 — BUG -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 02:</div>
   <h2>Tem um <span>Bug</span> Escondido</h2>
@@ -483,7 +564,7 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 11: EXEMPLO 3 — CÓDIGO -->
+<!-- SLIDE 17: EXEMPLO 3 — CÓDIGO -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
   <h2>calcular<span>Frete</span></h2>
@@ -508,25 +589,73 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 12: EXEMPLO 3 — MAPA -->
+<!-- SLIDE 18: EXEMPLO 3 — MAPA CÓDIGO -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
   <h2>Mapeamento de <span>Branches</span></h2>
-  <p style="margin-bottom: 16px;">Essa função tem 2 blocos de decisão:</p>
-  <div class="unit-card">
-    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Bloco 1 (peso):</strong> if / else if / else → 3 branches</p>
-    <p><strong style="color: #00d4ff;">Bloco 2 (estado):</strong> if → 2 branches (TRUE/FALSE)</p>
+  <p style="margin-bottom: 16px;">Identificando as decisões:</p>
+  <div class="code-block" style="font-size: 16px !important;">
+    <span class="comment">// Bloco 1: peso</span><br>
+    <span class="keyword">SE</span> peso <= <span class="number">1</span> <span class="keyword">ENTÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch A</span><br>
+    <span class="keyword">SENÃO SE</span> peso <= <span class="number">5</span> <span class="keyword">ENTÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch B</span><br>
+    <span class="keyword">SENÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch C</span><br><br>
+    <span class="comment">// Bloco 2: estado</span><br>
+    <span class="keyword">SE</span> estado = <span class="string">"SP"</span> <span class="keyword">ENTÃO</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Branch D</span>
   </div>
-  <div class="unit-card fragment fade-up" style="border-left-color: #f97316 !important;">
-    <p style="margin-bottom: 4px;"><strong style="color: #f97316;">V(G) = 3 + 1 = 4</strong> → mínimo 4 testes</p>
-    <p style="font-size: 20px !important;">Mas na prática, temos <strong style="color: #fff;">3 × 2 = 6 combinações</strong> de path!</p>
-  </div>
-  <p class="fragment fade-up" style="margin-top: 12px; font-size: 22px !important; color: #64748b !important;">Path coverage exige testar todas as combinações — cresce rápido!</p>
 </div>
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 13: EXEMPLO 3 — BUG -->
+<!-- SLIDE 19: EXEMPLO 3 — MAPA BRANCHES -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
+  <h2>Branches <span>Identificados</span></h2>
+  <p style="margin-bottom: 16px;">4 branches no total:</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #00d4ff;">Bloco 1 (peso):</strong></p>
+    <p style="margin-bottom: 4px; font-size: 18px; color: #64748b;">Branch A: peso <= 1 → frete 10</p>
+    <p style="margin-bottom: 4px; font-size: 18px; color: #64748b;">Branch B: peso <= 5 → frete 20</p>
+    <p style="font-size: 18px; color: #64748b;">Branch C: SENÃO → frete 50</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #f97316 !important; margin-top: 12px;">
+    <p style="margin: 0;"><strong style="color: #f97316;">Bloco 2 (estado):</strong></p>
+    <p style="margin: 4px 0 0 0; font-size: 18px; color: #64748b;">Branch D: estado = "SP" → frete * 0.9</p>
+  </div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 20: EXEMPLO 3 — MAPA PATHS -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
+  <h2>Paths <span>Possíveis</span></h2>
+  <p style="margin-bottom: 16px;">Combinações dos 2 blocos:</p>
+  <div class="unit-card">
+    <p style="margin-bottom: 4px;"><strong style="color: #22c55e;">3 caminhos do peso</strong> × <strong style="color: #f97316;">2 caminhos do estado</strong></p>
+    <p style="margin-top: 8px; font-size: 20px !important;"><strong style="color: #fff;">3 × 2 = 6 combinações</strong></p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important; color: #64748b;">Path coverage exige testar todas as combinações!</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 21: EXEMPLO 3 — MAPA V(G) -->
+<div class="slide-content">
+  <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
+  <h2>Complexidade <span>V(G)</span></h2>
+  <p style="margin-bottom: 16px;">Quantos testes mínimos?</p>
+  <div class="unit-card">
+    <p style="margin: 0;"><strong style="color: #00d4ff;">Fórmula:</strong> V(G) = decisões + 1</p>
+  </div>
+  <div class="unit-card" style="border-left-color: #f97316 !important; margin-top: 16px;">
+    <p style="margin: 0;"><strong style="color: #f97316;">3 decisões</strong> (SE + SENÃO SE + SE) + 1 = <strong style="color: #22c55e;">V(G) = 4</strong></p>
+  </div>
+  <p style="margin-top: 16px; font-size: 20px !important;">Mínimo <strong style="color: #22c55e;">4 testes</strong> para 100% branch coverage.</p>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<!-- SLIDE 22: EXEMPLO 3 — BUG -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXEMPLO 03:</div>
   <h2>Bug <span>Encontrado</span></h2>
@@ -542,7 +671,7 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 14: COMPLEXIDADE CICLOMÁTICA -->
+<!-- SLIDE 23: COMPLEXIDADE CICLOMÁTICA -->
 <div class="slide-content">
   <h2>Complexidade <span>Ciclomática</span></h2>
   <p style="margin-bottom: 16px;">Quantos testes mínimos você precisa?</p>
@@ -562,7 +691,7 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 15: EXERCÍCIO PROPOSTO — CÓDIGO PARTE 1 -->
+<!-- SLIDE 24: EXERCÍCIO PROPOSTO — CÓDIGO PARTE 1 -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXERCÍCIO PROPOSTO:</div>
   <h2>calcular<span>Situação</span></h2>
@@ -582,7 +711,7 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 16: EXERCÍCIO PROPOSTO — CÓDIGO PARTE 2 -->
+<!-- SLIDE 25: EXERCÍCIO PROPOSTO — CÓDIGO PARTE 2 -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXERCÍCIO PROPOSTO:</div>
   <h2>calcular<span>Situação</span></h2>
@@ -606,7 +735,7 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 17: EXERCÍCIO PROPOSTO — PERGUNTAS -->
+<!-- SLIDE 26: EXERCÍCIO PROPOSTO — PERGUNTAS -->
 <div class="slide-content">
   <div class="mono orange" style="font-size: 16px; margin-bottom: 12px;">EXERCÍCIO PROPOSTO:</div>
   <h2>Analise os <span>Branches</span></h2>
@@ -624,7 +753,7 @@
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<!-- SLIDE 18: RESUMO -->
+<!-- SLIDE 27: RESUMO -->
 <div class="slide-content" style="align-items: center !important; text-align: center !important; justify-content: center !important;">
   <div class="mono blue" style="font-size: 18px; margin-bottom: 20px;">RESUMO</div>
   <h2 style="font-size: 43px !important; border-left: none !important; padding-left: 0 !important;">O que <span class="blue">Aprendemos</span>?</h2>
