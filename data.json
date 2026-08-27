@@ -22,13 +22,19 @@
     {
       "id": "01",
       "pasta": "aula1",
-      "nome": "UNIDADE 1",
-      "descricao": "Introdução e Teste Funcional — Verificação, Validação, Fundamentos, Casos de Teste e Critérios de Aceitação"
+      "nome": "Aula 1",
+      "descricao": "Introdução e Teste Funcional — Verificação, Validação, Fundamentos, Casos de Teste e Critérios de Aceitação",
+      "pratica": {
+        "id": "P2",
+        "arquivo": "pratica/index.html",
+        "nome": "Sistema de Streaming — Assistir com a Galera",
+        "descricao": "Exercício de criação de casos de teste e critérios de aceitação para 10 funcionalidades de um sistema de streaming social"
+      }
     },
     {
       "id": "02",
       "pasta": "aula2",
-      "nome": "UNIDADE 2",
+      "nome": "Aula 2",
       "descricao": "Branches, Paths e Cobertura — Conceitos com Pseudocódigo e Exercício Prático"
     }
   ]

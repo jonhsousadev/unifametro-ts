@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prática 2 - Teste de Software - UNIFAMETRO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #020617;
+      color: #94a3b8;
+      font-family: 'Urbanist', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px;
+      flex: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header .tag {
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #00d4ff;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+      font-size: 36px;
+    }
+
+    .header h1 span {
+      color: #00d4ff;
+    }
+
+    .header .divider-line {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #00d4ff, #f97316);
+      margin: 24px auto;
+      border-radius: 2px;
+    }
+
+    .header p {
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 24px;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: #00d4ff; }
+
+    /* Section styles */
+    .section {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+      color: #f97316;
+      margin-bottom: 8px;
+    }
+
+    .section h2 {
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      font-size: 26px;
+      margin-bottom: 20px;
+      border-left: 4px solid #00d4ff;
+      padding-left: 16px;
+    }
+
+    .section h3 {
+      font-weight: 700;
+      color: #00d4ff;
+      font-size: 18px;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+
+    .section p {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .section ul, .section ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .section li {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    .section li strong {
+      color: #e2e8f0;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #1e293b;
+      margin: 20px 0;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: rgba(0, 212, 255, 0.08);
+      color: #00d4ff;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    /* Use case cards */
+    .uc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .uc-card {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 14px 16px;
+      transition: border-color 0.3s;
+    }
+
+    .uc-card:hover {
+      border-color: #00d4ff;
+    }
+
+    .uc-card .uc-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #f97316;
+      margin-bottom: 4px;
+    }
+
+    .uc-card .uc-title {
+      font-weight: 700;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .uc-card .uc-desc {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* Question card */
+    .question-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-left: 4px solid #f97316;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      border-bottom: 1px solid #1e293b;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .question-header:hover {
+      background: rgba(0, 212, 255, 0.03);
+    }
+
+    .question-header .q-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #f97316;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .question-header .q-title {
+      font-weight: 700;
+      color: #fff;
+      font-size: 18px;
+      flex: 1;
+      margin-left: 12px;
+    }
+
+    .question-header .q-toggle {
+      color: #475569;
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+
+    .question-header.active .q-toggle {
+      transform: rotate(180deg);
+    }
+
+    .question-body {
+      display: none;
+      padding: 24px 28px;
+    }
+
+    .question-body.active {
+      display: block;
+    }
+
+    .question-body .uc-reference {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .question-body .uc-ref-item {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      flex: 1;
+    }
+
+    .question-body .uc-ref-item .uc-ref-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #f97316;
+      margin-bottom: 2px;
+    }
+
+    .question-body .uc-ref-item .uc-ref-name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .task-box {
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .task-box h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #00d4ff;
+      margin-bottom: 8px;
+    }
+
+    .task-box ol {
+      margin-bottom: 0;
+    }
+
+    .task-box li {
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    /* Answer section */
+    .answer-toggle {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      color: #f97316;
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .answer-toggle.visible {
+      display: inline-flex;
+    }
+
+    .answer-toggle:hover {
+      background: rgba(249, 115, 22, 0.2);
+    }
+
+    .answer-panel {
+      display: none;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+
+    .answer-panel.active {
+      display: block;
+    }
+
+    .answer-panel h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #22c55e;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .test-case {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+
+    .test-case .tc-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #00d4ff;
+      margin-bottom: 4px;
+    }
+
+    .test-case .tc-field {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 2px;
+    }
+
+    .test-case .tc-field strong {
+      color: #e2e8f0;
+      display: inline-block;
+      min-width: 120px;
+    }
+
+    .criteria-box {
+      background: rgba(34, 197, 94, 0.05);
+      border: 1px solid rgba(34, 197, 94, 0.15);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 12px;
+      margin-bottom: 10px;
+    }
+
+    .criteria-box .cb-title {
+      font-weight: 700;
+      color: #22c55e;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .criteria-box .given {
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    .criteria-box .when {
+      color: #00d4ff;
+      font-weight: 700;
+    }
+
+    .criteria-box .then {
+      color: #f97316;
+      font-weight: 700;
+    }
+
+    .criteria-box p {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-bottom: 4px;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #1e293b;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer .divider-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #00d4ff, #f97316);
+      margin: 0 auto 16px;
+      border-radius: 2px;
+    }
+
+    .footer .copy {
+      color: #334155;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      .header h1 { font-size: 26px; }
+      .uc-grid { grid-template-columns: 1fr; }
+      .question-body .uc-reference { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+
+    <div class="header">
+      <div class="tag">UNIFAMETRO | PROF. JONH SOUSA</div>
+      <h1>Prática 2 — <span>StreamTogether</span></h1>
+      <div class="divider-line"></div>
+      <p>Sistema de Streaming "Assistir com a Galera" — Casos de Teste e Critérios de Aceitação</p>
+    </div>
+
+    <!-- ==================== RESUMO TEÓRICO ==================== -->
+    <div class="section">
+      <div class="section-tag">Material de Apoio</div>
+      <h2>Casos de Teste e Critérios de Aceitação</h2>
+
+      <h3>O que é um Caso de Teste?</h3>
+      <p>Um <strong style="color:#fff;">caso de teste</strong> é um documento que descreve uma situação específica a ser verificada no sistema. Ele define <strong style="color:#fff;">o que testar</strong>, <strong style="color:#fff;">como testar</strong> e <strong style="color:#fff;">qual resultado é esperado</strong>.</p>
+
+      <p>Um bom caso de teste deve conter:</p>
+      <ul>
+        <li><strong style="color:#00d4ff;">ID:</strong> Identificador único e rastreável (ex: <code>CT-Cadastro-001</code>)</li>
+        <li><strong style="color:#fff;">Cenário/Descrição:</strong> O que está sendo testado, em linguagem clara</li>
+        <li><strong style="color:#f97316;">Pré-condição:</strong> Estado do sistema antes da execução do teste</li>
+        <li><strong style="color:#00d4ff;">Dados de entrada (Entrada):</strong> Valores ou ações que o testador vai fornecer/executar</li>
+        <li><strong style="color:#22c55e;">Resultado esperado:</strong> O que deve acontecer se o sistema estiver correto</li>
+        <li><strong style="color:#94a3b8;">Resultado obtido:</strong> Preenchido <em>após</em> a execução (passou ou falhou)</li>
+      </ul>
+
+      <div class="divider"></div>
+
+      <h3>Como Criar Casos de Teste?</h3>
+      <p>Siga estas etapas para derivar casos de teste a partir de um caso de uso:</p>
+      <ol>
+        <li><strong style="color:#fff;">Entenda o fluxo principal:</strong> Qual é o caminho feliz? (usuário faz tudo certo)</li>
+        <li><strong style="color:#fff;">Identifique alternativas:</strong> O que acontece com entradas inválidas, dados faltantes, limites?</li>
+        <li><strong style="color:#fff;">Pense nas exceções:</strong> O que o sistema faz quando algo dá errado? (conexao, permissao, etc.)</li>
+        <li><strong style="color:#fff;">Defina dados de teste concretos:</strong> Use valores reais, não genéricos ("email@email.com", nao "um email")</li>
+        <li><strong style="color:#fff;">Escreva o resultado esperado de forma objetiva:</strong> "Mensagem de erro X é exibida", nao "deve dar erro"</li>
+      </ol>
+
+      <div class="divider"></div>
+
+      <h3>O que são Critérios de Aceitação?</h3>
+      <p><strong style="color:#fff;">Critérios de aceitação</strong> são condições que devem ser satisfeitas para que uma funcionalidade seja considerada <strong style="color:#fff;">pronta e aceita</strong>. Eles traduzem os requisitos em cenários testáveis usando o formato <strong style="color:#fff;">DADO / QUANDO / ENTÃO</strong> (Given / When / Then).</p>
+
+      <p>Diferença entre caso de teste e critério de aceitação:</p>
+      <ul>
+        <li><strong style="color:#00d4ff;">Caso de teste:</strong> Foca em <em>verificar se o código funciona</em> (perspectiva do tester)</li>
+        <li><strong style="color:#f97316;">Critério de aceitação:</strong> Foca em <em>confirmar que o requisito foi atendido</em> (perspectiva do produto/cliente)</li>
+      </ul>
+
+      <p>Exemplo de critério de aceitação no formato DADO/QUANDO/ENTÃO:</p>
+      <div class="task-box">
+        <h4>CA-Cadastro-001: Cadastro com sucesso</h4>
+        <p><span class="given">DADO</span> que o usuário está na tela de cadastro</p>
+        <p><span class="when">QUANDO</span> preenche nome, email válido e senha com mínimo 6 caracteres</p>
+        <p><span class="then">ENTÃO</span> a conta é criada e o usuário é redirecionado para o painel</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Dicas para uma Boa Especificação</h3>
+      <ul>
+        <li><strong style="color:#fff;">Seja específico:</strong> Evite termos vagos como "rápido", "bonito", "funcionar"</li>
+        <li><strong style="color:#fff;">Use dados concretos:</strong> Em vez de "email inválido", escreva "email sem @: 'abc'"</li>
+        <li><strong style="color:#fff;">Um critério = uma afirmação:</strong> Não misture múltiplas condições num único critério</li>
+        <li><strong style="color:#fff;">Priorize o caminho feliz:</strong> Comece pelo fluxo principal, depois cubra exceções</li>
+        <li><strong style="color:#fff;">Revisite os requisitos:</strong> Cada requisito funcional deve ter pelo menos um critério de aceitação</li>
+      </ul>
+    </div>
+
+    <!-- ==================== DESCRIÇÃO DO SISTEMA ==================== -->
+    <div class="section">
+      <div class="section-tag">Caso de Uso</div>
+      <h2>StreamTogether — Assistir com a Galera</h2>
+      <p>O <strong style="color:#fff;">StreamTogether</strong> é uma plataforma de streaming que permite aos usuários assistir vídeos, séries e filmes <strong style="color:#00d4ff;">sincronizados com amigos em tempo real</strong>. Diferente de plataformas tradicionais, o foco é a <strong style="color:#fff;">experiência social</strong>: criar sessões compartilhadas ("watch parties"), interagir via chat ao vivo e enviar reações enquanto assistem juntos, mesmo estando em locais diferentes.</p>
+
+      <div class="divider"></div>
+
+      <h3>10 Casos de Uso do Sistema</h3>
+
+      <div class="uc-grid">
+        <div class="uc-card">
+          <div class="uc-id">UC-01</div>
+          <div class="uc-title">Criar Conta</div>
+          <div class="uc-desc">O usuário se cadastra com nome, email e senha para acessar a plataforma.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-02</div>
+          <div class="uc-title">Fazer Login</div>
+          <div class="uc-desc">O usuário entra no sistema com email e senha cadastrados.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-03</div>
+          <div class="uc-title">Criar Sessão de Watch Party</div>
+          <div class="uc-desc">O host cria uma sessão, seleciona o conteúdo e define um nome para a sessão.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-04</div>
+          <div class="uc-title">Entrar numa Sessão</div>
+          <div class="uc-desc">O convidado entra numa sessão existente usando link ou código de convite.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-05</div>
+          <div class="uc-title">Sincronizar Playback</div>
+          <div class="uc-desc">O vídeo é sincronizado automaticamente entre todos os participantes da sessão.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-06</div>
+          <div class="uc-title">Controle do Host (Play/Pause)</div>
+          <div class="uc-desc">Apenas o host pode pausar, dar play ou retroceder o vídeo para todos.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-07</div>
+          <div class="uc-title">Chat ao Vivo</div>
+          <div class="uc-desc">Participantes enviam mensagens de texto durante a sessão em tempo real.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-08</div>
+          <div class="uc-title">Reações (Emojis)</div>
+          <div class="uc-desc">Participantes enviam emojis que aparecem flutuando na tela para todos.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-09</div>
+          <div class="uc-title">Sair da Sessão</div>
+          <div class="uc-desc">Um participante pode sair da sessão a qualquer momento.</div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-id">UC-10</div>
+          <div class="uc-title">Encerrar Sessão (Host)</div>
+          <div class="uc-desc">O host encerra a watch party, desconectando todos os participantes.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== EXERCÍCIOS ==================== -->
+    <div class="section">
+      <div class="section-tag">Exercício Prático</div>
+      <h2>5 Questões — Casos de Teste e Critérios de Aceitação</h2>
+      <p>Para cada questão, analise os 2 casos de uso indicados e elabore:</p>
+      <ol>
+        <li><strong style="color:#fff;">Pelo menos 3 casos de teste</strong> por funcionalidade (caminho feliz + exceções)</li>
+        <li><strong style="color:#fff;">Pelo menos 2 critérios de aceitação</strong> por funcionalidade (formato DADO/QUANDO/ENTÃO)</li>
+      </ol>
+    </div>
+
+    <!-- QUESTÃO 1 -->
+    <div class="question-card">
+      <div class="question-header" onclick="toggleQuestion(this)">
+        <span class="q-number">Questão 01</span>
+        <span class="q-title">Cadastro e Login (UC-01, UC-02)</span>
+        <i class="fas fa-chevron-down q-toggle"></i>
+      </div>
+      <div class="question-body">
+        <div class="uc-reference">
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-01</div>
+            <div class="uc-ref-name">Criar Conta</div>
+          </div>
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-02</div>
+            <div class="uc-ref-name">Fazer Login</div>
+          </div>
+        </div>
+
+        <div class="task-box">
+          <h4>Sua Tarefa</h4>
+          <ol>
+            <li>Escreva <strong>3 casos de teste</strong> para "Criar Conta" (1 caminho feliz + 2 exceções)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Criar Conta" (formato DADO/QUANDO/ENTÃO)</li>
+            <li>Escreva <strong>3 casos de teste</strong> para "Fazer Login" (1 caminho feliz + 2 exceções)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Fazer Login" (formato DADO/QUANDO/ENTÃO)</li>
+          </ol>
+        </div>
+
+        <button class="answer-toggle" onclick="toggleAnswer(this)">
+          <i class="fas fa-eye"></i> Ver Gabarito
+        </button>
+        <div class="answer-panel">
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-01: Criar Conta</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CRIAR-CONTA-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Cadastro com sucesso — dados válidos</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está na tela de cadastro</div>
+            <div class="tc-field"><strong>Entrada:</strong> Nome: "Ana Silva" | Email: "ana@email.com" | Senha: "123456"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Conta criada com sucesso e redirecionado para o painel principal</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CRIAR-CONTA-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Cadastro com email já existente</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Email "ana@email.com" já está cadastrado</div>
+            <div class="tc-field"><strong>Entrada:</strong> Nome: "Ana Souza" | Email: "ana@email.com" | Senha: "654321"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "Este email já está cadastrado" exibida, conta não criada</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CRIAR-CONTA-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Cadastro com senha muito curta</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está na tela de cadastro</div>
+            <div class="tc-field"><strong>Entrada:</strong> Nome: "Carlos Lima" | Email: "carlos@email.com" | Senha: "12"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "A senha deve ter no mínimo 6 caracteres" exibida</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-01</div>
+            <p><strong>CA-CRIAR-CONTA-001:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está na tela de cadastro com todos os campos obrigatórios vazios</p>
+            <p><span class="when">QUANDO</span> preenche nome, email válido e senha com 6 ou mais caracteres e clica em "Cadastrar"</p>
+            <p><span class="then">ENTÃO</span> a conta é criada, uma mensagem de sucesso é exibida e o usuário é redirecionado para o painel</p>
+
+            <p style="margin-top: 10px;"><strong>CA-CRIAR-CONTA-002:</strong></p>
+            <p><span class="given">DADO</span> que o email "ana@email.com" já está cadastrado no sistema</p>
+            <p><span class="when">QUANDO</span> um novo usuário tenta se cadastrar com o mesmo email</p>
+            <p><span class="then">ENTÃO</span> uma mensagem de erro "Este email já está cadastrado" é exibida e a conta não é criada</p>
+          </div>
+
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-02: Fazer Login</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-LOGIN-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Login com credenciais válidas</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário "ana@email.com" está cadastrado com senha "123456"</div>
+            <div class="tc-field"><strong>Entrada:</strong> Email: "ana@email.com" | Senha: "123456"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Login realizado com sucesso, redirecionado ao painel</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-LOGIN-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Login com senha incorreta</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário "ana@email.com" está cadastrado</div>
+            <div class="tc-field"><strong>Entrada:</strong> Email: "ana@email.com" | Senha: "999999"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "Email ou senha incorretos" exibida, acesso negado</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-LOGIN-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Login com email não cadastrado</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Email "fantasma@email.com" não existe no sistema</div>
+            <div class="tc-field"><strong>Entrada:</strong> Email: "fantasma@email.com" | Senha: "123456"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "Email ou senha incorretos" exibida</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-02</div>
+            <p><strong>CA-LOGIN-001:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está na tela de login e possui uma conta válida</p>
+            <p><span class="when">QUANDO</span> insere email e senha corretos e clica em "Entrar"</p>
+            <p><span class="then">ENTÃO</span> o usuário é autenticado e redirecionado para o painel principal em até 3 segundos</p>
+
+            <p style="margin-top: 10px;"><strong>CA-LOGIN-002:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está na tela de login</p>
+            <p><span class="when">QUANDO</span> insere email ou senha incorretos</p>
+            <p><span class="then">ENTÃO</span> a mensagem "Email ou senha incorretos" é exibida e o usuário permanece na tela de login</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTÃO 2 -->
+    <div class="question-card">
+      <div class="question-header" onclick="toggleQuestion(this)">
+        <span class="q-number">Questão 02</span>
+        <span class="q-title">Watch Party: Criar e Entrar (UC-03, UC-04)</span>
+        <i class="fas fa-chevron-down q-toggle"></i>
+      </div>
+      <div class="question-body">
+        <div class="uc-reference">
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-03</div>
+            <div class="uc-ref-name">Criar Sessão de Watch Party</div>
+          </div>
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-04</div>
+            <div class="uc-ref-name">Entrar numa Sessão</div>
+          </div>
+        </div>
+
+        <div class="task-box">
+          <h4>Sua Tarefa</h4>
+          <ol>
+            <li>Escreva <strong>3 casos de teste</strong> para "Criar Sessão" (1 caminho feliz + 2 exceções)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Criar Sessão"</li>
+            <li>Escreva <strong>3 casos de teste</strong> para "Entrar numa Sessão" (1 caminho feliz + 2 exceções)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Entrar numa Sessão"</li>
+          </ol>
+        </div>
+
+        <button class="answer-toggle" onclick="toggleAnswer(this)">
+          <i class="fas fa-eye"></i> Ver Gabarito
+        </button>
+        <div class="answer-panel">
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-03: Criar Sessão</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CRIAR-SESSAO-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Criar sessão com sucesso</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está logado</div>
+            <div class="tc-field"><strong>Entrada:</strong> Nome da sessão: "Noite de Filme" | Conteúdo: "Interestelar"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Sessão criada, código de convite gerado (ex: "ABC123"), tela de espera exibida</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CRIAR-SESSAO-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Criar sessão sem selecionar conteúdo</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está logado</div>
+            <div class="tc-field"><strong>Entrada:</strong> Nome: "Sessão Teste" | Conteúdo: (nenhum selecionado)</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "Selecione um conteúdo para iniciar a sessão" exibida</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CRIAR-SESSAO-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Criar sessão com nome vazio</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está logado</div>
+            <div class="tc-field"><strong>Entrada:</strong> Nome: "" | Conteúdo: "Stranger Things"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "Dê um nome à sua sessão" exibida</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-03</div>
+            <p><strong>CA-CRIAR-SESSAO-001:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está logado e na tela de criação de sessão</p>
+            <p><span class="when">QUANDO</span> preenche um nome para a sessão, seleciona um conteúdo e clica em "Criar Sessão"</p>
+            <p><span class="then">ENTÃO</span> uma sessão é criada, um código de convite de 6 caracteres é gerado e exibido na tela</p>
+
+            <p style="margin-top: 10px;"><strong>CA-CRIAR-SESSAO-002:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está na tela de criação de sessão</p>
+            <p><span class="when">QUANDO</span> tenta criar a sessão sem selecionar um conteúdo</p>
+            <p><span class="then">ENTÃO</span> o botão "Criar Sessão" permanece desabilitado ou uma mensagem de validação é exibida</p>
+          </div>
+
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-04: Entrar numa Sessão</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-ENTRAR-SESSAO-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Entrar com código válido</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Sessão "ABC123" está ativa e aguardando participantes</div>
+            <div class="tc-field"><strong>Entrada:</strong> Código: "ABC123"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Usuário entra na sala de espera, vê o nome da sessão e o conteúdo selecionado</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-ENTRAR-SESSAO-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Entrar com código inexistente</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Nenhuma sessão com código "XXXXXX" existe</div>
+            <div class="tc-field"><strong>Entrada:</strong> Código: "XXXXXX"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "Sessão não encontrada" exibida</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-ENTRAR-SESSAO-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Entrar com código de sessão já encerrada</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Sessão "OLD001" foi encerrada pelo host</div>
+            <div class="tc-field"><strong>Entrada:</strong> Código: "OLD001"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem "Esta sessão foi encerrada" exibida</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-04</div>
+            <p><strong>CA-ENTRAR-SESSAO-001:</strong></p>
+            <p><span class="given">DADO</span> que uma sessão ativa existe com o código "ABC123"</p>
+            <p><span class="when">QUANDO</span> o usuário insere o código "ABC123" e clica em "Entrar"</p>
+            <p><span class="then">ENTÃO</span> o usuário é adicionado à sala de espera e visualiza o nome da sessão e o conteúdo</p>
+
+            <p style="margin-top: 10px;"><strong>CA-ENTRAR-SESSAO-002:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está na tela de entrada por código</p>
+            <p><span class="when">QUANDO</span> insere um código que não corresponde a nenhuma sessão ativa</p>
+            <p><span class="then">ENTÃO</span> a mensagem "Sessão não encontrada. Verifique o código e tente novamente." é exibida</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTÃO 3 -->
+    <div class="question-card">
+      <div class="question-header" onclick="toggleQuestion(this)">
+        <span class="q-number">Questão 03</span>
+        <span class="q-title">Playback Sincronizado (UC-05, UC-06)</span>
+        <i class="fas fa-chevron-down q-toggle"></i>
+      </div>
+      <div class="question-body">
+        <div class="uc-reference">
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-05</div>
+            <div class="uc-ref-name">Sincronizar Playback</div>
+          </div>
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-06</div>
+            <div class="uc-ref-name">Controle do Host (Play/Pause)</div>
+          </div>
+        </div>
+
+        <div class="task-box">
+          <h4>Sua Tarefa</h4>
+          <ol>
+            <li>Escreva <strong>3 casos de teste</strong> para "Sincronizar Playback" (1 caminho feliz + 2 cenários)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Sincronizar Playback"</li>
+            <li>Escreva <strong>3 casos de teste</strong> para "Controle do Host" (1 caminho feliz + 2 exceções)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Controle do Host"</li>
+          </ol>
+        </div>
+
+        <button class="answer-toggle" onclick="toggleAnswer(this)">
+          <i class="fas fa-eye"></i> Ver Gabarito
+        </button>
+        <div class="answer-panel">
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-05: Sincronizar Playback</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-SYNC-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Sincronização automática ao entrar na sessão</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Sessão ativa com vídeo em reprodução no minuto 15:30</div>
+            <div class="tc-field"><strong>Entrada:</strong> Novo participante entra na sessão</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> O vídeo do novo participante inicia automaticamente no minuto 15:30</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-SYNC-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Sincronização quando host pausa o vídeo</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> 3 participantes assistindo sincronizados no minuto 20:00</div>
+            <div class="tc-field"><strong>Entrada:</strong> Host clica em "Pausar"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Todos os participantes têm o vídeo pausado simultaneamente no minuto 20:00</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-SYNC-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Participante com conexão lenta</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Participante com latência alta entra na sessão</div>
+            <div class="tc-field"><strong>Entrada:</strong> Entrada na sessão com delay de 5 segundos</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> O sistema compensa o delay e inicia o vídeo o mais próximo possível do timestamp atual</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-05</div>
+            <p><strong>CA-SYNC-001:</strong></p>
+            <p><span class="given">DADO</span> que uma sessão está ativa e o vídeo está sendo reproduzido no minuto 15:30</p>
+            <p><span class="when">QUANDO</span> um novo participante entra na sessão</p>
+            <p><span class="then">ENTÃO</span> o vídeo inicia automaticamente no mesmo timestamp (15:30) do host</p>
+
+            <p style="margin-top: 10px;"><strong>CA-SYNC-002:</strong></p>
+            <p><span class="given">DADO</span> que todos os participantes estão sincronizados</p>
+            <p><span class="when">QUANDO</span> o host pausa o vídeo</p>
+            <p><span class="then">ENTÃO</span> todos os participantes veem o vídeo pausado no mesmo timestamp em até 2 segundos</p>
+          </div>
+
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-06: Controle do Host</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-HOST-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Host pausa o vídeo</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Host está na sessão e o vídeo está em reprodução</div>
+            <div class="tc-field"><strong>Entrada:</strong> Host clica em "Pausar"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Vídeo pausado para todos, ícone muda para "Play"</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-HOST-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Participante comum tenta pausar o vídeo</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Participante "Carlos" não é o host da sessão</div>
+            <div class="tc-field"><strong>Entrada:</strong> Carlos clica em "Pausar"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Botão de controle está desabilitado ou invisível para Carlos</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-HOST-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Host sai da sessão e controle é transferido</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Host "Ana" e participantes "Carlos" e "Maria" na sessão</div>
+            <div class="tc-field"><strong>Entrada:</strong> Ana clica em "Sair da Sessão"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Carlos (próximo na lista) recebe automaticamente os controles de host</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-06</div>
+            <p><strong>CA-HOST-001:</strong></p>
+            <p><span class="given">DADO</span> que o usuário é o host da sessão e o vídeo está reproduzindo</p>
+            <p><span class="when">QUANDO</span> clica no botão "Pausar"</p>
+            <p><span class="then">ENTÃO</span> o vídeo é pausado para todos os participantes e o ícone do botão muda para "Play"</p>
+
+            <p style="margin-top: 10px;"><strong>CA-HOST-002:</strong></p>
+            <p><span class="given">DADO</span> que um participante NÃO é o host da sessão</p>
+            <p><span class="when">QUANDO</span> visualiza a tela de reprodução</p>
+            <p><span class="then">ENTÃO</span> os controles de play/pause/retroceder estão desabilitados ou ocultos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTÃO 4 -->
+    <div class="question-card">
+      <div class="question-header" onclick="toggleQuestion(this)">
+        <span class="q-number">Questão 04</span>
+        <span class="q-title">Chat e Reações (UC-07, UC-08)</span>
+        <i class="fas fa-chevron-down q-toggle"></i>
+      </div>
+      <div class="question-body">
+        <div class="uc-reference">
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-07</div>
+            <div class="uc-ref-name">Chat ao Vivo</div>
+          </div>
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-08</div>
+            <div class="uc-ref-name">Reações (Emojis)</div>
+          </div>
+        </div>
+
+        <div class="task-box">
+          <h4>Sua Tarefa</h4>
+          <ol>
+            <li>Escreva <strong>3 casos de teste</strong> para "Chat ao Vivo" (1 caminho feliz + 2 cenários)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Chat ao Vivo"</li>
+            <li>Escreva <strong>3 casos de teste</strong> para "Reações" (1 caminho feliz + 2 cenários)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Reações"</li>
+          </ol>
+        </div>
+
+        <button class="answer-toggle" onclick="toggleAnswer(this)">
+          <i class="fas fa-eye"></i> Ver Gabarito
+        </button>
+        <div class="answer-panel">
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-07: Chat ao Vivo</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CHAT-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Enviar mensagem no chat</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está na sessão com chat aberto</div>
+            <div class="tc-field"><strong>Entrada:</strong> Mensagem: "Esse filme é incrível!"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem aparece no chat para todos os participantes com nome e timestamp</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CHAT-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Enviar mensagem vazia</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está na sessão com chat aberto</div>
+            <div class="tc-field"><strong>Entrada:</strong> Mensagem: "" (campo vazio)</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Botão "Enviar" desabilitado ou nenhuma mensagem é publicada</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-CHAT-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Mensagem com conteúdo ofensivo</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Sistema possui filtro de palavras</div>
+            <div class="tc-field"><strong>Entrada:</strong> Mensagem com palavra proibida</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Mensagem é bloqueada ou substituída por asteriscos antes de ser exibida</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-07</div>
+            <p><strong>CA-CHAT-001:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está numa sessão ativa com o chat aberto</p>
+            <p><span class="when">QUANDO</span> digita uma mensagem não vazia e clica em "Enviar"</p>
+            <p><span class="then">ENTÃO</span> a mensagem é exibida no chat para todos os participantes com o nome do remetente e horário</p>
+
+            <p style="margin-top: 10px;"><strong>CA-CHAT-002:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está numa sessão ativa</p>
+            <p><span class="when">QUANDO</span> tenta enviar uma mensagem vazia ou com apenas espaços</p>
+            <p><span class="then">ENTÃO</span> a mensagem não é publicada e nenhuma notificação é enviada aos participantes</p>
+          </div>
+
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-08: Reações (Emojis)</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-REACAO-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Enviar reação de emoji</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário está assistindo o vídeo na sessão</div>
+            <div class="tc-field"><strong>Entrada:</strong> Clique no emoji "😂" na barra de reações</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Emoji "😂" aparece flutuando na tela de todos os participantes</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-REACAO-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Enviar várias reações rapidamente (spam)</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Usuário clica 20 vezes seguidas no emoji "❤️"</div>
+            <div class="tc-field"><strong>Entrada:</strong> 20 cliques em menos de 3 segundos</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Sistema limita a 1 reação por segundo ou agrupa as reações para evitar sobrecarga visual</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-REACAO-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Reação aparece com nome do remetente</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> "Carlos" envia emoji "🔥"</div>
+            <div class="tc-field"><strong>Entrada:</strong> Clique no emoji "🔥"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Emoji flutua e exibe "Carlos" abaixo dele para os outros participantes</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-08</div>
+            <p><strong>CA-REACAO-001:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está assistindo o vídeo numa sessão ativa</p>
+            <p><span class="when">QUANDO</span> clica em um emoji na barra de reações</p>
+            <p><span class="then">ENTÃO</span> o emoji selecionado aparece flutuando na tela de todos os participantes da sessão</p>
+
+            <p style="margin-top: 10px;"><strong>CA-REACAO-002:</strong></p>
+            <p><span class="given">DADO</span> que o usuário está numa sessão ativa</p>
+            <p><span class="when">QUANDO</span> envia mais de 5 reações em 2 segundos</p>
+            <p><span class="then">ENTÃO</span> o sistema aplica um rate limit e exibe no máximo 1 reação por segundo por usuário</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTÃO 5 -->
+    <div class="question-card">
+      <div class="question-header" onclick="toggleQuestion(this)">
+        <span class="q-number">Questão 05</span>
+        <span class="q-title">Sair e Encerrar Sessão (UC-09, UC-10)</span>
+        <i class="fas fa-chevron-down q-toggle"></i>
+      </div>
+      <div class="question-body">
+        <div class="uc-reference">
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-09</div>
+            <div class="uc-ref-name">Sair da Sessão</div>
+          </div>
+          <div class="uc-ref-item">
+            <div class="uc-ref-id">UC-10</div>
+            <div class="uc-ref-name">Encerrar Sessão (Host)</div>
+          </div>
+        </div>
+
+        <div class="task-box">
+          <h4>Sua Tarefa</h4>
+          <ol>
+            <li>Escreva <strong>3 casos de teste</strong> para "Sair da Sessão" (1 caminho feliz + 2 cenários)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Sair da Sessão"</li>
+            <li>Escreva <strong>3 casos de teste</strong> para "Encerrar Sessão" (1 caminho feliz + 2 cenários)</li>
+            <li>Escreva <strong>2 critérios de aceitação</strong> para "Encerrar Sessão"</li>
+          </ol>
+        </div>
+
+        <button class="answer-toggle" onclick="toggleAnswer(this)">
+          <i class="fas fa-eye"></i> Ver Gabarito
+        </button>
+        <div class="answer-panel">
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-09: Sair da Sessão</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-SAIR-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Participante comum sai da sessão</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> "Carlos" é participante (não host) de uma sessão ativa</div>
+            <div class="tc-field"><strong>Entrada:</strong> Carlos clica em "Sair da Sessão" e confirma</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Carlos sai da sessão, é redirecionado à tela inicial e os demais continuam assistindo</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-SAIR-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Último participante sai (exceto host)</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Sessão com host "Ana" e apenas 1 participante "Carlos"</div>
+            <div class="tc-field"><strong>Entrada:</strong> Carlos clica em "Sair"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Carlos sai, Ana fica sozinha na sessão com mensagem "Aguardando participantes..."</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-SAIR-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Sair sem confirmação</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Participante clica em "Sair da Sessão"</div>
+            <div class="tc-field"><strong>Entrada:</strong> Clique em "Sair" → diálogo de confirmação aparece → clica em "Cancelar"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> O participante permanece na sessão, nenhuma ação é tomada</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-09</div>
+            <p><strong>CA-SAIR-001:</strong></p>
+            <p><span class="given">DADO</span> que o participante está numa sessão ativa</p>
+            <p><span class="when">QUANDO</span> clica em "Sair da Sessão" e confirma a ação</p>
+            <p><span class="then">ENTÃO</span> o participante é removido da sessão, o chat e o vídeo param e ele é redirecionado à tela inicial</p>
+
+            <p style="margin-top: 10px;"><strong>CA-SAIR-002:</strong></p>
+            <p><span class="given">DADO</span> que o participante está numa sessão ativa</p>
+            <p><span class="when">QUANDO</span> clica em "Sair da Sessão" e cancela a confirmação</p>
+            <p><span class="then">ENTÃO</span> o participante permanece na sessão e nada muda no estado da reprodução</p>
+          </div>
+
+          <h4><i class="fas fa-check-circle"></i> Resposta Esperada — UC-10: Encerrar Sessão</h4>
+
+          <div class="test-case">
+            <div class="tc-id">CT-ENCERRAR-001</div>
+            <div class="tc-field"><strong>Cenário:</strong> Host encerra a sessão com sucesso</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> "Ana" é host, 3 participantes ativos</div>
+            <div class="tc-field"><strong>Entrada:</strong> Ana clica em "Encerrar Sessão" e confirma</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Todos os participantes recebem aviso "Sessão encerrada pelo host", são desconectados e redirecionados</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-ENCERRAR-002</div>
+            <div class="tc-field"><strong>Cenário:</strong> Participante tenta encerrar sessão (não é host)</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> "Carlos" é participante comum</div>
+            <div class="tc-field"><strong>Entrada:</strong> Carlos tenta acessar a opção "Encerrar Sessão"</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Opção "Encerrar Sessão" não está visível ou está desabilitada para Carlos</div>
+          </div>
+
+          <div class="test-case">
+            <div class="tc-id">CT-ENCERRAR-003</div>
+            <div class="tc-field"><strong>Cenário:</strong> Host encerra e tenta reabrir</div>
+            <div class="tc-field"><strong>Pré-condição:</strong> Sessão foi encerrada por Ana</div>
+            <div class="tc-field"><strong>Entrada:</strong> Ana tenta reabrir a sessão com o mesmo código</div>
+            <div class="tc-field"><strong>Resultado esperado:</strong> Código não é reutilizado, uma nova sessão deve ser criada</div>
+          </div>
+
+          <div class="criteria-box">
+            <div class="cb-title">Critérios de Aceitação — UC-10</div>
+            <p><strong>CA-ENCERRAR-001:</strong></p>
+            <p><span class="given">DADO</span> que o usuário é o host de uma sessão ativa com participantes conectados</p>
+            <p><span class="when">QUANDO</span> clica em "Encerrar Sessão" e confirma</p>
+            <p><span class="then">ENTÃO</span> todos os participantes recebem uma notificação, são desconectados e a sessão é removida do sistema</p>
+
+            <p style="margin-top: 10px;"><strong>CA-ENCERRAR-002:</strong></p>
+            <p><span class="given">DADO</span> que uma sessão foi encerrada pelo host</p>
+            <p><span class="when">QUANDO</span> alguém tenta acessar o código da sessão encerrada</p>
+            <p><span class="then">ENTÃO</span> a mensagem "Esta sessão foi encerrada" é exibida e o código não pode ser reutilizado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="divider-line"></div>
+    <div class="copy">&copy; 2026 Prof. Jonh Sousa - UNIFAMETRO</div>
+  </footer>
+
+  <script>
+    function toggleQuestion(header) {
+      header.classList.toggle('active');
+      const body = header.nextElementSibling;
+      body.classList.toggle('active');
+    }
+
+    function toggleAnswer(btn) {
+      const panel = btn.nextElementSibling;
+      panel.classList.toggle('active');
+      btn.innerHTML = panel.classList.contains('active')
+        ? '<i class="fas fa-eye-slash"></i> Ocultar Gabarito'
+        : '<i class="fas fa-eye"></i> Ver Gabarito';
+    }
+
+    function initHint() {
+      const params = new URLSearchParams(window.location.search);
+      const show = params.get('hint') === 'true';
+      document.querySelectorAll('.answer-toggle').forEach(btn => {
+        btn.classList.toggle('visible', show);
+      });
+    }
+
+    initHint();
+  </script>
+</body>
+</html>
