@@ -514,15 +514,16 @@ RETORNAR resultado          ← ✓</pre>
   <div class="flowchart">
     <pre style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #e2e8f0; margin: 0;">
               ┌─────────┐
-              │  A > 0? │──T──▶ B>0? ─┬─T─▶ Path1
-              └────┬────┘         │   │
-                   │ F            │   F
-                   ▼              ▼   ▼
-                 B>0? ───┬──T─▶ Path2
-                   │     │
-                   │ F   │
-                   ▼     ▼
-                Path3  Path4</pre>
+              │  A > 0? │
+              └────┬────┘
+              T    │    F
+              ▼    │    ▼
+        ┌─────────┐│┌─────────┐
+        │ B > 0?  │││ B > 0?  │
+        └────┬────┘│└────┬────┘
+        T    │  F   T    │  F
+        ▼    │  ▼   ▼    │  ▼
+     Path1   │Path2 Path3│Path4</pre>
   </div>
   <p style="margin-top: 12px; font-size: 18px !important;">2 decisões = 2² = <strong style="color: #22c55e;">4 paths possíveis</strong></p>
 </div>
